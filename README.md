@@ -15,7 +15,7 @@ Process:
 3. Clone this repository to your server
 4. Go to the repository folder with command "cd chrome_remote_desktop_ubuntu"
 5. Edit file with command "sudo nano install_chrome_remote_desktop.sh"
-6. Edit lines 23, 24 to enter your username and password. NEW_USER="-----------" USER_PASSWORD="-------------"
+6. Edit line numbers 23, 24 in the file to enter your username and password. NEW_USER="-----------" USER_PASSWORD="-------------"
 7. Run the shell script with command "bash install_chrome_remote_desktop.sh"
 8. Logout of root
 9. Login with the new username and password created in step 6
