@@ -41,6 +41,8 @@ echo "Installation complete. Please log in as the user '$NEW_USER' to complete t
 
 # Instructions for the user
 echo "Log out and log in as $NEW_USER to apply the group membership changes."
-echo "Then run the following command to complete the Chrome Remote Desktop setup:"
-echo "DISPLAY= /opt/google/chrome-remote-desktop/start-host --code=\"<your-code>\" --redirect-url=\"https://remotedesktop.google.com/_/oauthredirect\" --name=\$(hostname)"
-echo "Remember to replace <your-code> with the code you received during setup."
+echo "Install Chrome remote desktop extension on your browser"
+echo "Open and go to Setup via SSH > Set up another computer > begin > next > authorize > Debian Linux > Cop aommand"
+echo "Paste the command copied from chrome remote desktop and paste on the linux terminal and enter to run"
+echo "Enter pin"
+echo "The remote dektop connection should now be running"
