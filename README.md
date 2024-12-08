@@ -15,9 +15,11 @@ git clone https://github.com/kadavilrahul/rclone_ubuntu.git
 cd rclone_ubuntu 
 4.Edit file install_chrome_remote_desktop.sh
 sudo nano install_chrome_remote_desktop.sh
-5.Edit lines 23, 24 to enter your username and password
+5.Edit lines 23, 24 to enter your username and password.
+
 NEW_USER="-----------"
 USER_PASSWORD="-------------"
+
 6. Run the shell script with below command
 bash install_chrome_remote_desktop.sh
 7. Logout of root
