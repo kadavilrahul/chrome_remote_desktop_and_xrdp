@@ -20,8 +20,8 @@ sudo apt --fix-missing install -y
 echo "exec /etc/X11/Xsession /usr/bin/xfce4-session" | sudo tee /etc/chrome-remote-desktop-session
 
 # Create a new user
-NEW_USER="rahuldineshk"
-USER_PASSWORD="Karimpadam2#"
+NEW_USER="-----------"
+USER_PASSWORD="-------------"
 
 # Add the user and set the password
 sudo adduser --disabled-password --gecos "" $NEW_USER
