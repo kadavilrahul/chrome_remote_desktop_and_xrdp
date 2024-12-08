@@ -1,5 +1,4 @@
-# rclone_ubuntu
-Install XFCE and Chrome Remote desktop on Ubuntu using shellscript
+# Install XFCE and Chrome Remote desktop on Ubuntu using shellscript
 
 Description:
 1. This code installs XFCE and Chrome remote desktop
@@ -10,9 +9,9 @@ Process:
 1. Open Linux terminal
 2. Login with user root and password for root
 3. Clone this repository by typing below command on terminal and enter
-git clone https://github.com/kadavilrahul/rclone_ubuntu.git
+git clone https://github.com/kadavilrahul/chrome_remote_desktop_ubuntu.git
 4. Go to the repository folder
-cd rclone_ubuntu
+cd chrome_remote_desktop_ubuntu
 5.Edit file install_chrome_remote_desktop.sh
 sudo nano install_chrome_remote_desktop.sh
 6.Edit lines 23, 24 to enter your username and password.
