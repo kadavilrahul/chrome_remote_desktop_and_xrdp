@@ -6,7 +6,7 @@ Description:
 
 Advantages of this method:
 1. This makes it easy for installtion and usage of softwares that need graphical interface like browsers, code editors and others.
-2. You can cccess host terminal of the server and run commands there which is faster than SSH.
+2. You can acccess host terminal of the server and run commands there which is faster than SSH.
 3. Run terminal commands from web browser, mobile phone, tablets etc. 
 
 Process:
