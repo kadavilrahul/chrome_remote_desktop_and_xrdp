@@ -7,7 +7,9 @@ Description:
 Advantages of this method:
 1. This makes it easy for installtion and usage of softwares that need graphical interface like browsers, code editors and others.
 2. You can acccess host terminal of the server and run commands there which is faster than SSH.
-3. Run terminal commands from web browser, mobile phone, tablets etc. 
+3. Run terminal commands from web browser, mobile phone, tablets etc.
+4. Mozilla firefox will be installed along with XFCE and chorome remote desktop.
+5. High speed internet connection will be avaibale on server.
 
 Process:
 1. Open Linux terminal
