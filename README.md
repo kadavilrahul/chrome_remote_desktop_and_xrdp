@@ -11,11 +11,10 @@ Advantages of this method:
 
 Process:
 1. Open Linux terminal
-3. Login with user root and password for root
-4. Clone this repository to your server
-5. Go to the repository folder
+2. Login with user root and password for root
+3. Clone this repository to your server
+4. Go to the repository folder
 cd chrome_remote_desktop_ubuntu
-
 5.Edit file install_chrome_remote_desktop.sh
 sudo nano install_chrome_remote_desktop.sh
 6.Edit lines 23, 24 to enter your username and password.
