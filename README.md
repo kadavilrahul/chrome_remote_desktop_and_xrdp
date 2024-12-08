@@ -22,7 +22,7 @@ Process:
 10. Install Chrome remote desktop extension on your browser
 11. Go to "Setup via SSH" > Set up another computer > begin > next > authorize > Debian Linux > Copy the command
 12. Paste the command copied from chrome remote desktop and paste on the linux terminal and enter to run.
-13. Enter pin
+13. Enter pin and password of new user, follow on screen process.
 14. The remote dektop connection should now be running.
 15. Go to Remote access om chrome remote desktop and see if you can access the server.
 
