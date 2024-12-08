@@ -12,8 +12,7 @@ Advantages of this method:
 Process:
 1. Open Linux terminal
 2. Login with user root and password for root
-3. Clone this repository by typing below command on terminal and enter
-git clone https://github.com/kadavilrahul/chrome_remote_desktop_ubuntu.git
+3. Clone this repository to your server
 4. Go to the repository folder
 cd chrome_remote_desktop_ubuntu
 5.Edit file install_chrome_remote_desktop.sh
