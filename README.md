@@ -2,14 +2,14 @@
 
 Description:
 1. This code installs XFCE and Chrome remote desktop
-2. The purpose of the installation is to install Graphical user interface on Linux server and access server desktop from remote location, mobile phones etc.
+2. The purpose of the installation is to install Graphical user interface on Linux server and access desktop of server a from remote location or mobile devices etc.
 3. Mozilla firefox will be installed along with XFCE and chorome remote desktop.
 
 Advantages of this method:
 1. This makes it easy for installtion and usage of softwares that need graphical interface like browsers, code editors and others.
 2. You can acccess host terminal of the server and run commands there which is faster than SSH.
 3. Run terminal commands from web browser, mobile phone, tablets etc.
-4. High speed internet connection will be avaibale on server.
+4. High speed internet connection will be available on server.
 
 Process:
 1. Open Linux terminal
