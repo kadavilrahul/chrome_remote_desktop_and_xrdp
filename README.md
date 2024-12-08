@@ -1,9 +1,13 @@
-# Install XFCE and Chrome Remote desktop on Ubuntu using shellscript
+# This repository is to install XFCE and Chrome Remote desktop on Ubuntu using shellscript
 
 Description:
 1. This code installs XFCE and Chrome remote desktop
-2. The purpose of the installation is to install Graphical user interface on Linux server and access server desktop from remote location
-3. This makes it easy for installtion and usage of softwares that need graphical interface, browsers, code editors and others.
+2. The purpose of the installation is to install Graphical user interface on Linux server and access server desktop from remote location, mobile phones etc.
+
+Advantages of this method:
+1. This makes it easy for installtion and usage of softwares that need graphical interface like browsers, code editors and others.
+2. You can cccess host terminal of the server and run commands there which is faster than SSH.
+3. Run terminal commands from web browser, mobile phone, tablets etc. 
 
 Process:
 1. Open Linux terminal
