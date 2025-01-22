@@ -1,33 +1,86 @@
-# This repository is to install XFCE and Chrome Remote desktop on Ubuntu using shellscript
+# Chrome Remote Desktop Installer for Ubuntu
 
-Description:
-1. This code installs XFCE and Chrome remote desktop
-2. The purpose of the installation is to install Graphical user interface on Linux server and access desktop of server a from remote location or mobile devices etc.
-3. Mozilla firefox will be installed along with XFCE and chorome remote desktop.
+A shell script to automate the installation of XFCE desktop environment and Chrome Remote Desktop on Ubuntu servers, enabling graphical remote access from any device.
 
-Advantages of this method:
-1. This makes it easy for installtion and usage of softwares that need graphical interface like browsers, code editors and others.
-2. You can acccess host terminal of the server and run commands there which is faster than SSH.
-3. Run terminal commands from web browser, mobile phone, tablets etc.
-4. High speed internet connection will be available on server.
+## Features
 
-Process:
-1. Open Linux terminal
-2. Login with user root and password for root
-3. Clone this repository to your server
-4. Go to the repository folder with command "cd chrome_remote_desktop_ubuntu"
-5. Edit file with command "sudo nano install_chrome_remote_desktop.sh"
-6. Edit line numbers 23, 24 in the file to enter your username and password. NEW_USER="-----------" USER_PASSWORD="-------------"
-7. Run the shell script with command "bash install_chrome_remote_desktop.sh"
-8. Logout of root
-9. Login with the new username and password created in step 6
-10. Install Chrome remote desktop extension on your browser
-11. Go to "Setup via SSH" > Set up another computer > begin > next > authorize > Debian Linux > Copy the command
-12. Paste the command copied from chrome remote desktop and paste on the linux terminal and enter to run.
-13. Enter pin and password of new user, follow on screen process.
-14. The remote dektop connection should now be running.
-15. Go to Remote access om chrome remote desktop and see if you can access the server.
+- Automated installation of XFCE desktop environment
+- Chrome Remote Desktop setup
+- Firefox browser installation
+- Secure user creation with password protection
+- Complete GUI access to your Ubuntu server
 
-Tested on:    Linux Ubuntu 24.04.1 LTS
+## Prerequisites
 
-Note: This code is generated using Chatgpt
+- Ubuntu Server (Tested on Ubuntu 24.04.1 LTS)
+- Root access or sudo privileges
+- Internet connection
+- Chrome browser on your local machine
+
+## Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/kadavilrahul/chrome_remote_desktop.git
+   cd chrome_remote_desktop
+   ```
+
+2. Run the installation script:
+   ```bash
+   bash install_chrome_remote_desktop.sh
+   ```
+
+3. Follow the interactive prompts:
+   - Enter a username when prompted
+   - Enter and confirm your password
+   - Wait for the installation to complete
+
+## Post-Installation Setup
+
+1. Install the Chrome Remote Desktop extension in your Chrome browser
+2. Navigate to Chrome Remote Desktop settings:
+   - Go to "Setup via SSH"
+   - Select "Set up another computer"
+   - Click "Begin" > "Next" > "Authorize"
+   - Choose "Debian Linux"
+   - Copy the provided command
+
+3. On your Ubuntu server:
+   - Log in with your newly created user credentials
+   - Paste and run the command copied from Chrome Remote Desktop
+   - Set up a PIN when prompted
+   - Complete the on-screen setup process
+
+## Usage
+
+1. Open Chrome Remote Desktop in your browser
+2. Look for your server under "Remote Access"
+3. Click to connect and enter your PIN
+4. You now have full GUI access to your Ubuntu server
+
+## Benefits
+
+- Access your server's GUI from any device
+- Fast and secure remote access
+- Run graphical applications seamlessly
+- Better alternative to traditional SSH for GUI needs
+- High-speed connection for smooth operation
+
+## Troubleshooting
+
+If you encounter any issues:
+1. Ensure all installation steps were completed successfully
+2. Verify your user has proper permissions
+3. Check your internet connection
+4. Make sure Chrome Remote Desktop service is running
+
+## Security Note
+
+- Always use strong passwords
+- Keep your PIN secure
+- Regularly update your system
+- Monitor remote access sessions
+
+## Contributing
+
+Feel free to submit issues and enhancement requests!

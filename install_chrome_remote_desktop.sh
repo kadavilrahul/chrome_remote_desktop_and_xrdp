@@ -19,9 +19,27 @@ sudo apt --fix-missing install -y
 # Configure Chrome Remote Desktop to use XFCE
 echo "exec /etc/X11/Xsession /usr/bin/xfce4-session" | sudo tee /etc/chrome-remote-desktop-session
 
-# Create a new user
-NEW_USER="-----------"
-USER_PASSWORD="-------------"
+# Prompt for new user details
+read -p "Enter the new username: " NEW_USER
+read -s -p "Enter the password for $NEW_USER: " USER_PASSWORD
+echo
+read -s -p "Confirm password: " CONFIRM_PASSWORD
+echo
+
+# Validate password match
+while [ "$USER_PASSWORD" != "$CONFIRM_PASSWORD" ]; do
+    echo "Passwords do not match. Please try again."
+    read -s -p "Enter the password for $NEW_USER: " USER_PASSWORD
+    echo
+    read -s -p "Confirm password: " CONFIRM_PASSWORD
+    echo
+done
+
+# Validate username
+while [[ -z "$NEW_USER" ]]; do
+    echo "Username cannot be empty. Please try again."
+    read -p "Enter the new username: " NEW_USER
+done
 
 # Add the user and set the password
 sudo adduser --disabled-password --gecos "" $NEW_USER
