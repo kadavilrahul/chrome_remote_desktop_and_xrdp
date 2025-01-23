@@ -19,7 +19,7 @@ A shell script to automate the installation of XFCE desktop environment and Chro
 
 ## Installation
 
-1. Clone the repository:
+1. Clone the repository. Run below command on Linux terminal.
    ```bash
    git clone https://github.com/kadavilrahul/chrome_remote_desktop.git
    cd chrome_remote_desktop
