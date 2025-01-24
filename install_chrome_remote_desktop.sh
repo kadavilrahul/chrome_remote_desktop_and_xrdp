@@ -4,20 +4,11 @@
 sudo apt update
 sudo apt upgrade -y
 
-# Install XFCE
-sudo apt install -y xfce4 xfce4-goodies
-
-# Install Display Manager if not installed
-sudo apt install -y lightdm
-
 # Install Chrome Remote Desktop
 wget https://dl.google.com/linux/direct/chrome-remote-desktop_current_amd64.deb
 sudo dpkg -i chrome-remote-desktop_current_amd64.deb
 sudo apt --fix-broken install -y
 sudo apt --fix-missing install -y
-
-# Configure Chrome Remote Desktop to use XFCE
-echo "exec /etc/X11/Xsession /usr/bin/xfce4-session" | sudo tee /etc/chrome-remote-desktop-session
 
 # Prompt for new user details
 read -p "Enter the new username: " NEW_USER
