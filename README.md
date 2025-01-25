@@ -1,6 +1,7 @@
 # Chrome Remote Desktop Installer for Ubuntu
 
 A shell script to automate the installation of XFCE desktop environment and Chrome Remote Desktop on Ubuntu servers, enabling graphical remote access from any device.
+Tested on Ubuntu 24.04.1 LTS
 
 ## Features
 
@@ -12,14 +13,16 @@ A shell script to automate the installation of XFCE desktop environment and Chro
 
 ## Prerequisites
 
-- Ubuntu Server (Tested on Ubuntu 24.04.1 LTS)
+- Ubuntu Server 
 - Root access or sudo privileges
 - Internet connection
 - Chrome browser on your local machine
 
 ## Installation
 
-1. Clone the repository. Run below command on Linux terminal.
+Run below commands on Linux terminal.
+
+1. Clone the repository. 
    ```bash
    git clone https://github.com/kadavilrahul/chrome_remote_desktop.git
    ```
@@ -39,18 +42,21 @@ A shell script to automate the installation of XFCE desktop environment and Chro
    - Enter and confirm your password
    - Wait for the installation to complete
 
-## Post-Installation Setup
+5. On your Ubuntu server:
+   - Enter cd for root folder
+   - Log in with your newly created user credentials
+   - Enter su $NEW_USER
+   
+6. Install the Chrome Remote Desktop extension in your Chrome browser
 
-1. Install the Chrome Remote Desktop extension in your Chrome browser
-2. Navigate to Chrome Remote Desktop settings:
+7. Navigate to Chrome Remote Desktop settings:
    - Go to "Setup via SSH"
    - Select "Set up another computer"
    - Click "Begin" > "Next" > "Authorize"
    - Choose "Debian Linux"
    - Copy the provided command
 
-3. On your Ubuntu server:
-   - Log in with your newly created user credentials
+8. On your Ubuntu server:
    - Paste and run the command copied from Chrome Remote Desktop
    - Set up a PIN when prompted
    - Complete the on-screen setup process
