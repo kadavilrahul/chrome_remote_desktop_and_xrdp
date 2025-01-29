@@ -43,13 +43,9 @@ Run below commands on Linux terminal.
    - Wait for the installation to complete
 
 5. On your Ubuntu server:
-   - Enter root folder with below command  
-   ```bash
-   cd 
-   ```
-   - Log in with your newly created user credentials (Command:su $NEW_USER)
-   - Enter password   
-   
+   - You will be loggged in with your newly created user credentials
+   - You may also do it manually if needed by using the command `su $NEW_USER`  
+    
 6. Install the Chrome Remote Desktop extension in your Chrome browser
 
 7. Navigate to Chrome Remote Desktop settings:
