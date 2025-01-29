@@ -58,9 +58,13 @@ sudo apt install -y firefox
 echo "Installation complete. Please log in as the user '$NEW_USER' to complete the Chrome Remote Desktop setup."
 
 # Instructions for the user
-echo "Log out and log in as $NEW_USER to apply the group membership changes."
+echo "You are now being logged in as $NEW_USER to apply the group membership changes."
 echo "Install Chrome remote desktop extension on your browser"
 echo "Open and go to Setup via SSH > Set up another computer > begin > next > authorize > Debian Linux > Cop aommand"
 echo "Paste the command copied from chrome remote desktop and paste on the linux terminal and enter to run"
 echo "Enter pin"
 echo "The remote dektop connection should now be running"
+
+# Switch to the new user
+echo "Switching to user $NEW_USER..."
+exec su - $NEW_USER
