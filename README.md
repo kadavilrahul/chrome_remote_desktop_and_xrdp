@@ -24,7 +24,7 @@ Run below commands on Linux terminal.
 
 1. Clone the repository. 
    ```bash
-   git clone https://github.com/kadavilrahul/chrome_remote_desktop.git
+   git clone https://github.com/kadavilrahul/chrome_remote_desktop.git && cd chrome_remote_desktop && bash install_chrome_remote_desktop.sh
    ```
 
 2. Navigate to the project directory:
