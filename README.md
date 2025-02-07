@@ -26,36 +26,25 @@ Run below commands on Linux terminal.
    ```bash
    git clone https://github.com/kadavilrahul/chrome_remote_desktop.git && cd chrome_remote_desktop && bash install_chrome_remote_desktop.sh
    ```
-
-2. Navigate to the project directory:
-   ```bash
-   cd chrome_remote_desktop
-   ```
-
-3. Run the installation script:
-   ```bash
-   bash install_chrome_remote_desktop.sh
-   ```
-
-4. Follow the interactive prompts:
+2. Follow the interactive prompts:
    - Enter a username when prompted
    - Enter and confirm your password
    - Wait for the installation to complete
 
-5. On your Ubuntu server:
+3. On your Ubuntu server:
    - You will be loggged in with your newly created user credentials
    - You may also do it manually if needed by using the command `su $NEW_USER`  
     
-6. Install the Chrome Remote Desktop extension in your Chrome browser
+4. Install the Chrome Remote Desktop extension in your Chrome browser
 
-7. Navigate to Chrome Remote Desktop settings:
+5. Navigate to Chrome Remote Desktop settings:
    - Go to "Setup via SSH"
    - Select "Set up another computer"
    - Click "Begin" > "Next" > "Authorize"
    - Choose "Debian Linux"
    - Copy the provided command
 
-8. On your Ubuntu server:
+6. On your Ubuntu server:
    - Paste and run the command copied from Chrome Remote Desktop
    - Set up a PIN when prompted
    - Complete the on-screen setup process
