@@ -82,4 +82,3 @@ If you encounter any issues:
 ## Contributing
 
 Feel free to submit issues and enhancement requests!
-Contact kadavil.rahul@gmail.com
