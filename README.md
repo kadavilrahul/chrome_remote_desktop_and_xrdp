@@ -11,14 +11,18 @@ This is an automated installer for Chrome Remote Desktop that works across diffe
 
 ## Supported Distributions
 
-- Debian/Ubuntu based systems (using apt)
-- Red Hat/Fedora based systems (using dnf)
-- Arch Linux based systems (using pacman)
-- openSUSE based systems (using zypper)
+- Debian/Ubuntu based systems (using apt) - Tested Ok
+- Red Hat/Fedora based systems (using dnf) - Not tested 
+- Arch Linux based systems (using pacman) - Not tested 
+- openSUSE based systems (using zypper) - Not tested 
+
+## Tested on
+
+- Ubuntu 24.04
 
 ## Usage
 
-1. Clone the repository and run the file 
+1. Install git if not already installed, clone the repository, and run the file
    ```bash
    git clone https://github.com/kadavilrahul/chrome_remote_desktop.git && cd chrome_remote_desktop && bash main.sh
    ```
@@ -45,6 +49,12 @@ This is an automated installer for Chrome Remote Desktop that works across diffe
    - Set up a PIN when prompted
    - Complete the on-screen setup process
 
+7. Install VS Code (Optional)
+   - Run
+   ```bash
+   bash vscode.sh
+   ```
+   
 ## What gets installed
 
 - Chrome Remote Desktop
