@@ -1,18 +1,11 @@
 #!/bin/bash
 
-# Check if script is run as root
-if [ "$EUID" -ne 0 ]; then 
-    echo "Please run as root (use sudo)"
-    exit 1
-fi
+# Update and upgrade the system
+sudo pacman -Syu --noconfirm
 
-pacman -Syu --noconfirm
-
-pacman -S wget --noconfirm
-
-# For Arch, we need to use AUR
+# Install Chrome Remote Desktop (using AUR helper)
 if ! command -v yay &> /dev/null; then
-    pacman -S --needed git base-devel --noconfirm
+    sudo pacman -S --noconfirm git base-devel
     git clone https://aur.archlinux.org/yay.git
     cd yay
     makepkg -si --noconfirm
@@ -21,43 +14,61 @@ if ! command -v yay &> /dev/null; then
 fi
 yay -S chrome-remote-desktop --noconfirm
 
-pacman -S xfce4 xfce4-goodies --noconfirm
-pacman -S lightdm --noconfirm
-pacman -S firefox --noconfirm
+# Install XFCE
+sudo pacman -S --noconfirm xfce4 xfce4-goodies
 
-groupadd chrome-remote-desktop
+# Install Display Manager if not installed
+sudo pacman -S --noconfirm lightdm
 
-read -p "Enter username: " USERNAME
-while [[ -z "$USERNAME" ]]; do
-    echo "Username cannot be empty"
-    read -p "Enter username: " USERNAME
+# Configure Chrome Remote Desktop to use XFCE
+echo "exec /etc/X11/Xsession /usr/bin/xfce4-session" | sudo tee /etc/chrome-remote-desktop-session
+
+# Prompt for new user details
+read -p "Enter the new username: " NEW_USER
+read -s -p "Enter the password for $NEW_USER: " USER_PASSWORD
+echo
+read -s -p "Confirm password: " CONFIRM_PASSWORD
+echo
+
+# Validate password match
+while [ "$USER_PASSWORD" != "$CONFIRM_PASSWORD" ]; do
+    echo "Passwords do not match. Please try again."
+    read -s -p "Enter the password for $NEW_USER: " USER_PASSWORD
+    echo
+    read -s -p "Confirm password: " CONFIRM_PASSWORD
+    echo
 done
 
-read -s -p "Enter password: " PASSWORD
-echo
-read -s -p "Confirm password: " PASSWORD2
-echo
-
-while [[ "$PASSWORD" != "$PASSWORD2" ]]; do
-    echo "Passwords do not match!"
-    read -s -p "Enter password: " PASSWORD
-    echo
-    read -s -p "Confirm password: " PASSWORD2
-    echo
+# Validate username
+while [[ -z "$NEW_USER" ]]; do
+    echo "Username cannot be empty. Please try again."
+    read -p "Enter the new username: " NEW_USER
 done
 
-useradd -m -s /bin/bash "$USERNAME"
-echo "$USERNAME:$PASSWORD" | chpasswd
+# Add the user and set the password
+sudo adduser --disabled-password --gecos "" $NEW_USER
+echo "$NEW_USER:$USER_PASSWORD" | sudo chpasswd
 
-usermod -aG wheel "$USERNAME"
-usermod -aG chrome-remote-desktop "$USERNAME"
+# Add the user to the sudo group
+sudo usermod -aG wheel $NEW_USER
 
-echo "Installation completed!"
-echo "Please follow these steps to complete setup:"
-echo "1. Install Chrome Remote Desktop extension in your Chrome browser"
-echo "2. Go to https://remotedesktop.google.com/access"
-echo "3. Click on 'Set up remote access'"
-echo "4. Follow the prompts to set up your computer for remote access"
-echo "5. When asked, use your newly created username and password"
+# Create the chrome-remote-desktop group and add the user
+sudo groupadd chrome-remote-desktop
+sudo usermod -aG chrome-remote-desktop $NEW_USER
 
-su - "$USERNAME"
+# Install Firefox
+sudo pacman -S --noconfirm firefox
+
+echo "Installation complete. Please log in as the user '$NEW_USER' to complete the Chrome Remote Desktop setup."
+
+# Instructions for the user
+echo "You are now being logged in as $NEW_USER to apply the group membership changes."
+echo "Install Chrome remote desktop extension on your browser"
+echo "Open and go to Setup via SSH > Set up another computer > begin > next > authorize > Debian Linux > Copy command"
+echo "Paste the command copied from chrome remote desktop and paste on the linux terminal and enter to run"
+echo "Enter pin"
+echo "The remote desktop connection should now be running"
+
+# Switch to the new user
+echo "Switching to user $NEW_USER..."
+exec su - $NEW_USER
