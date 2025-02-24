@@ -1,30 +1,24 @@
-# Chrome Remote Desktop Installer for Ubuntu
+# Chrome Remote Desktop Installer
 
-A shell script to automate the installation of XFCE desktop environment and Chrome Remote Desktop on Ubuntu servers, enabling graphical remote access from any device.
-Tested on Ubuntu 24.04.1 LTS
+This is an automated installer for Chrome Remote Desktop that works across different Linux distributions.The script will automatically:
+1. Detect your Linux distribution and package manager
+2. Run the appropriate installation script
+3. Set up Chrome Remote Desktop with XFCE desktop environment
+4. Create a new user for remote access
+5. Provide instructions for final setup
 
-## Features
+## Supported Distributions
 
-- Automated installation of XFCE desktop environment
-- Chrome Remote Desktop setup
-- Firefox browser installation
-- Secure user creation with password protection
-- Complete GUI access to your Ubuntu server
+- Debian/Ubuntu based systems (using apt)
+- Red Hat/Fedora based systems (using dnf)
+- Arch Linux based systems (using pacman)
+- openSUSE based systems (using zypper)
 
-## Prerequisites
+## Usage
 
-- Ubuntu Server 
-- Root access or sudo privileges
-- Internet connection
-- Chrome browser on your local machine
-
-## Installation
-
-Run below commands on Linux terminal.
-
-1. Clone the repository. 
+1. Clone the repository and run the file 
    ```bash
-   git clone https://github.com/kadavilrahul/chrome_remote_desktop.git && cd chrome_remote_desktop && bash install_chrome_remote_desktop.sh
+   git clone https://github.com/kadavilrahul/chrome_remote_desktop.git && cd chrome_remote_desktop && bash main.sh
    ```
 2. Follow the interactive prompts:
    - Enter a username when prompted
@@ -49,12 +43,15 @@ Run below commands on Linux terminal.
    - Set up a PIN when prompted
    - Complete the on-screen setup process
 
-## Usage
 
-1. Open Chrome Remote Desktop in your browser
-2. Look for your server under "Remote Access"
-3. Click to connect and enter your PIN
-4. You now have full GUI access to your Ubuntu server
+
+## What gets installed
+
+- Chrome Remote Desktop
+- XFCE Desktop Environment
+- LightDM Display Manager
+- Firefox Web Browser
+- Required dependencies
 
 ## Benefits
 
@@ -82,3 +79,5 @@ If you encounter any issues:
 ## Contributing
 
 Feel free to submit issues and enhancement requests!
+
+
