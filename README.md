@@ -45,8 +45,6 @@ This is an automated installer for Chrome Remote Desktop that works across diffe
    - Set up a PIN when prompted
    - Complete the on-screen setup process
 
-
-
 ## What gets installed
 
 - Chrome Remote Desktop
@@ -66,10 +64,11 @@ This is an automated installer for Chrome Remote Desktop that works across diffe
 ## Troubleshooting
 
 If you encounter any issues:
-1. Ensure all installation steps were completed successfully
-2. Verify your user has proper permissions
-3. Check your internet connection
-4. Make sure Chrome Remote Desktop service is running
+1. Reinstall OS if residual version of Chrome remote desktop exist
+2. Do not reboot or sudo reboot from Chrome remote desktop
+3. Remember Chrome remote desktop works with non root user only
+4. If you want to install remote desktop on root use thne use RDP.
+5. Use this repo https://github.com/kadavilrahul/remote_desktop_xrdp to install XRDP and use with Microsoft Remote Desktop
 
 ## Security Note
 
