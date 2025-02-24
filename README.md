@@ -1,11 +1,13 @@
 # Chrome Remote Desktop Installer
 
-This is an automated installer for Chrome Remote Desktop that works across different Linux distributions.The script will automatically:
-1. Detect your Linux distribution and package manager
-2. Run the appropriate installation script
-3. Set up Chrome Remote Desktop with XFCE desktop environment
-4. Create a new user for remote access
-5. Provide instructions for final setup
+This is an automated installer for Chrome Remote Desktop that works across different Linux distributions. The script will automatically:
+1. Deploy Chrome Remote Desktop with a single command
+2. Detect your Linux distribution and package manager
+3. Run the appropriate installation script
+4. Set up Chrome Remote Desktop with XFCE desktop environment
+5. Create a new user for remote access
+6. Install firefox browser
+7. Provide instructions for final setup
 
 ## Supported Distributions
 

@@ -6,44 +6,19 @@ if [ "$EUID" -ne 0 ]; then
     exit 1
 fi
 
-# Update system
-echo "Updating system packages..."
 dnf update -y
 
-# Enable RPM Fusion repositories
-echo "Enabling RPM Fusion repositories..."
-dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
-dnf install -y https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+dnf install wget -y
 
-# Install required dependencies
-echo "Installing required dependencies..."
-dnf install -y wget
-
-# Download and install Chrome Remote Desktop
-echo "Installing Chrome Remote Desktop..."
 wget https://dl.google.com/linux/direct/chrome-remote-desktop_current_x86_64.rpm
-dnf install -y ./chrome-remote-desktop_current_x86_64.rpm
-rm chrome-remote-desktop_current_x86_64.rpm
+dnf install ./chrome-remote-desktop_current_x86_64.rpm -y
 
-# Install XFCE Desktop Environment
-echo "Installing XFCE desktop environment..."
-dnf groupinstall -y "Xfce Desktop"
+dnf groupinstall "Xfce" -y
+dnf install lightdm -y
+dnf install firefox -y
 
-# Install display manager
-echo "Installing LightDM display manager..."
-dnf install -y lightdm
+groupadd chrome-remote-desktop
 
-# Install Firefox browser
-echo "Installing Firefox..."
-dnf install -y firefox
-
-# Configure Chrome Remote Desktop to use XFCE
-echo "Configuring Chrome Remote Desktop to use XFCE..."
-mkdir -p /etc/chrome-remote-desktop-session
-echo "exec /usr/bin/xfce4-session" > /etc/chrome-remote-desktop-session
-
-# Create new user
-echo "Creating new user for remote access..."
 read -p "Enter username: " USERNAME
 while [[ -z "$USERNAME" ]]; do
     echo "Username cannot be empty"
@@ -63,11 +38,9 @@ while [[ "$PASSWORD" != "$PASSWORD2" ]]; do
     echo
 done
 
-# Create user and set password
 useradd -m -s /bin/bash "$USERNAME"
 echo "$USERNAME:$PASSWORD" | chpasswd
 
-# Add user to necessary groups
 usermod -aG wheel "$USERNAME"
 usermod -aG chrome-remote-desktop "$USERNAME"
 
@@ -79,6 +52,4 @@ echo "3. Click on 'Set up remote access'"
 echo "4. Follow the prompts to set up your computer for remote access"
 echo "5. When asked, use your newly created username and password"
 
-# Switch to new user
-echo "Switching to new user..."
 su - "$USERNAME"
