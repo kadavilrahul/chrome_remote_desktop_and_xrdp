@@ -94,3 +94,4 @@ Alternate recommended remote desktop applications
 ## Contributing
 
 Feel free to submit issues and enhancement requests!
+If you happen to run, modify scripts for other distros, please submit pr and mr.
