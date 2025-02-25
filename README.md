@@ -78,8 +78,11 @@ If you encounter any issues:
 2. Reinstall the OS if a residual version of Chrome Remote Desktop create issues
 3. Do not reboot or sudo reboot from Chrome remote desktop
 4. Remember Chrome remote desktop works with non root user only
-5. If you want to install remote desktop on root use thne use RDP.
-6. Use this repo https://github.com/kadavilrahul/remote_desktop_xrdp to install XRDP and use with Microsoft Remote Desktop
+5. If you want to install remote desktop on root use then use RDP.
+
+Alternate recommended remote desktop applications
+1. XRDP - Use this repo https://github.com/kadavilrahul/remote_desktop_xrdp to install XRDP and use with Microsoft Remote Desktop
+2. Helpwire - https://www.helpwire.app/
 
 ## Security Note
 
