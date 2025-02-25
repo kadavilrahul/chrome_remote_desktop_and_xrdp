@@ -11,10 +11,10 @@ This is an automated installer for Chrome Remote Desktop that works across diffe
 
 ## Supported Distributions
 
-- Debian/Ubuntu based systems (using apt) - Tested Ok
-- Red Hat/Fedora based systems (using dnf) - Not tested 
-- Arch Linux based systems (using pacman) - Not tested 
-- openSUSE based systems (using zypper) - Not tested 
+- Debian/Ubuntu based systems (using apt) - Tested Ok ✅
+- Red Hat/Fedora based systems (using dnf) - Not tested ❌
+- Arch Linux based systems (using pacman) - Not tested ❌
+- openSUSE based systems (using zypper) - Not tested ❌
 
 ## Tested on
 
@@ -94,5 +94,3 @@ Alternate recommended remote desktop applications
 ## Contributing
 
 Feel free to submit issues and enhancement requests!
-
-
