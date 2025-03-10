@@ -50,7 +50,11 @@ This is an automated installer for Chrome Remote Desktop that works across diffe
    - Complete the on-screen setup process
 
 7. Install VS Code (Optional)
-   - Run
+   - Exit to root
+   ```bash
+   exit
+   ```
+   - Run VS Code script
    ```bash
    bash vscode.sh
    ```
