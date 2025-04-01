@@ -56,7 +56,7 @@ This is an automated installer for Chrome Remote Desktop that works across diffe
    ```
    - Run VS Code script
    ```bash
-   bash vscode.sh
+   cd chrome_remote_desktop && bash vscode.sh
    ```
    
 ## What gets installed
