@@ -40,11 +40,11 @@ while [[ -z "$NEW_USER" ]]; do
 done
 
 # Add the user and set the password
-sudo adduser --disabled-password --gecos "" $NEW_USER
+sudo useradd -m $NEW_USER
 echo "$NEW_USER:$USER_PASSWORD" | sudo chpasswd
 
 # Add the user to the sudo group
-sudo usermod -aG sudo $NEW_USER
+sudo usermod -aG wheel $NEW_USER
 
 # Create the chrome-remote-desktop group and add the user
 sudo groupadd chrome-remote-desktop

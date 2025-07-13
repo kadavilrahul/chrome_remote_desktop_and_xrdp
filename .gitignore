@@ -1,5 +1,6 @@
 # Ignore backups folder
 backups/
+/.claude
 
 # Ignore shell scripts, log files, and pid files
 *.log
@@ -9,3 +10,4 @@ backups/
 setup_file_versioning.sh
 file_versioning.sh
 check_versioning.sh
+

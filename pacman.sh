@@ -46,7 +46,7 @@ while [[ -z "$NEW_USER" ]]; do
 done
 
 # Add the user and set the password
-sudo adduser --disabled-password --gecos "" $NEW_USER
+sudo useradd -m $NEW_USER
 echo "$NEW_USER:$USER_PASSWORD" | sudo chpasswd
 
 # Add the user to the sudo group
