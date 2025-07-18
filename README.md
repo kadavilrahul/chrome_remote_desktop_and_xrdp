@@ -19,7 +19,7 @@ This is an automated installer for Chrome Remote Desktop that works across diffe
 
 1. Clone the repository and run the interactive menu:
    ```bash
-   git clone https://github.com/kadavilrahul/chrome_remote_desktop.git && cd chrome_remote_desktop_and_xrdp
+   git clone https://github.com/kadavilrahul/chrome_remote_desktop_and_xrdp && cd chrome_remote_desktop_and_xrdp
    ```
    ```bash
    bash run.sh
