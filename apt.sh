@@ -55,7 +55,7 @@ sudo usermod -aG chrome-remote-desktop $NEW_USER
 # Install Firefox
 sudo apt install -y firefox
 
-echo "Installation complete.
+echo "Installation complete."
 
 # Instructions for the user
 echo "You are now being logged in as $NEW_USER."
