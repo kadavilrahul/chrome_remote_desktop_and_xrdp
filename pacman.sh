@@ -23,27 +23,15 @@ sudo pacman -S --noconfirm lightdm
 # Configure Chrome Remote Desktop to use XFCE
 echo "exec /etc/X11/Xsession /usr/bin/xfce4-session" | sudo tee /etc/chrome-remote-desktop-session
 
-# Prompt for new user details
-read -p "Enter the new username: " NEW_USER
-read -s -p "Enter the password for $NEW_USER: " USER_PASSWORD
-echo
-read -s -p "Confirm password: " CONFIRM_PASSWORD
-echo
-
-# Validate password match
-while [ "$USER_PASSWORD" != "$CONFIRM_PASSWORD" ]; do
-    echo "Passwords do not match. Please try again."
-    read -s -p "Enter the password for $NEW_USER: " USER_PASSWORD
-    echo
-    read -s -p "Confirm password: " CONFIRM_PASSWORD
-    echo
-done
-
-# Validate username
-while [[ -z "$NEW_USER" ]]; do
-    echo "Username cannot be empty. Please try again."
-    read -p "Enter the new username: " NEW_USER
-done
+# Read user details from config.json
+if [ -f "config.json" ]; then
+    NEW_USER=$(python3 -c "import json; print(json.load(open('config.json'))['user']['username'])")
+    USER_PASSWORD=$(python3 -c "import json; print(json.load(open('config.json'))['user']['password'])")
+    echo "Using username from config.json: $NEW_USER"
+else
+    echo "config.json not found. Please create it with username and password."
+    exit 1
+fi
 
 # Add the user and set the password
 sudo useradd -m $NEW_USER
