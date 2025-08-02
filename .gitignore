@@ -11,3 +11,5 @@ setup_file_versioning.sh
 file_versioning.sh
 check_versioning.sh
 
+# Other ignored files
+config.json

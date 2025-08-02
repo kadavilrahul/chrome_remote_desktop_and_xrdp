@@ -24,8 +24,24 @@ if [ -f "config.json" ]; then
     USER_PASSWORD=$(python3 -c "import json; print(json.load(open('config.json'))['user']['password'])")
     echo "Using username from config.json: $NEW_USER"
 else
-    echo "config.json not found. Please create it with username and password."
-    exit 1
+    echo "config.json not found. Creating one now..."
+    echo "Please enter the following details:"
+    
+    read -p "Enter username: " NEW_USER
+    read -s -p "Enter password: " USER_PASSWORD
+    echo
+    
+    # Create config.json with user inputs
+    cat > config.json << EOF
+{
+  "user": {
+    "username": "$NEW_USER",
+    "password": "$USER_PASSWORD"
+  }
+}
+EOF
+    
+    echo "config.json created successfully!"
 fi
 
 # Add the user and set the password
