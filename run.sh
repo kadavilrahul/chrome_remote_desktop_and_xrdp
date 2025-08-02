@@ -40,9 +40,9 @@ show_menu() {
     printf "${GREEN}2)${NC} ${WHITE}Install Google Chrome Browser${NC}\n"
     printf "${GREEN}3)${NC} ${WHITE}Install Visual Studio Code${NC}\n"
     printf "${GREEN}4)${NC} ${WHITE}Setup xRDP${NC}\n"
-    printf "${RED}5)${NC} ${WHITE}Exit${NC}\n"
+    printf "${RED}0)${NC} ${WHITE}Exit${NC}\n"
     echo
-    printf "${YELLOW}Enter your choice [1-5]: ${NC}"
+    printf "${YELLOW}Enter your choice [1-4,0]: ${NC}"
 }
 
 # Function to run scripts with error handling
@@ -96,18 +96,18 @@ main() {
             4)
                 run_script "./xrdp/setup_rdp.sh" "xRDP setup"
                 ;;
-            5)
+            0)
                 echo
                 printf "${GREEN}Thank you for using Chrome Remote Desktop Setup!${NC}\n"
                 exit 0
                 ;;
             *)
-                printf "${RED}Invalid option. Please choose 1-5.${NC}\n"
+                printf "${RED}Invalid option. Please choose 1-4 or 0.${NC}\n"
                 read -p "Press Enter to continue..."
                 ;;
         esac
         
-        if [ "$choice" != "5" ]; then
+        if [ "$choice" != "0" ]; then
             echo
             read -p "Press Enter to return to main menu..."
         fi
