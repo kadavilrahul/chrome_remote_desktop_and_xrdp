@@ -55,26 +55,6 @@ sudo sysctl -w net.ipv4.tcp_mtu_probing=1
 echo "Installing Firefox..."
 sudo apt-get install -y firefox
 
-# Install Chromium
-echo "Installing Chromium..."
-sudo apt-get install -y chromium-browser
-
-# Create Chromium desktop shortcut for root
-echo "Creating Chromium desktop shortcut..."
-cat << EOF | sudo tee /usr/share/applications/chromium-root.desktop
-[Desktop Entry]
-Version=1.0
-Name=Chromium (Root)
-Comment=Access the Internet
-Exec=chromium --no-sandbox --user-data-dir=/root/.chromium-data
-Terminal=false
-X-MultipleArgs=false
-Type=Application
-Icon=chromium-browser
-Categories=Network;WebBrowser;
-StartupNotify=true
-EOF
-
 # Install VS Code using Microsoft repository
 echo "Installing Visual Studio Code..."
 wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
@@ -99,37 +79,13 @@ Categories=Development;TextEditor;
 StartupNotify=true
 EOF
 
-# Install Windsurf
-echo "Installing Windsurf..."
-curl -fsSL "https://windsurf-stable.codeiumdata.com/wVxQEIWkwPUEAGf3/windsurf.gpg" | sudo gpg --dearmor -o /usr/share/keyrings/windsurf-stable-archive-keyring.gpg
-echo "deb [signed-by=/usr/share/keyrings/windsurf-stable-archive-keyring.gpg arch=amd64] https://windsurf-stable.codeiumdata.com/wVxQEIWkwPUEAGf3/apt stable main" | sudo tee /etc/apt/sources.list.d/windsurf.list > /dev/null
-sudo apt-get update
-sudo apt-get upgrade windsurf -y
-
-# Create Windsurf desktop shortcut for root
-echo "Creating Windsurf desktop shortcut..."
-cat << EOF | sudo tee /usr/share/applications/windsurf-root.desktop
-[Desktop Entry]
-Name=Windsurf (Root)
-Comment=Agentic IDE by Codeium
-GenericName=Text Editor
-Exec=windsurf --no-sandbox --user-data-dir=/root/.windsurf-data
-Icon=windsurf
-Type=Application
-Terminal=false
-Categories=Development;TextEditor;
-StartupNotify=true
-EOF
-
 # Allow root X server access
 echo "Configuring X server access..."
 echo "xhost +SI:localuser:root" >> ~/.profile
 echo "xhost +SI:localuser:\$(whoami)" >> ~/.profile
 
 # Make desktop entries executable
-sudo chmod +x /usr/share/applications/chromium-root.desktop
 sudo chmod +x /usr/share/applications/code-root.desktop
-sudo chmod +x /usr/share/applications/windsurf-root.desktop
 
 # Restart the system for all changes to take effect
 echo "System will now restart to apply all optimizations."
