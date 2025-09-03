@@ -21,3 +21,7 @@ go-tools/go.sum
 
 # Other ignored files
 config.json
+
+# Ignore downloaded packages
+chrome-remote-desktop_current_amd64.deb
+*.deb

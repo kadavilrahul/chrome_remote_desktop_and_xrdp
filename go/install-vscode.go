@@ -24,8 +24,8 @@ func main() {
 	}
 
 	// Check if config.json exists (for consistency)
-	if _, err := os.Stat("config.json"); err == nil {
-		config, err := loadConfig("config.json")
+	if _, err := os.Stat("/root/chrome_remote_desktop_and_xrdp/config.json"); err == nil {
+		config, err := loadConfig("/root/chrome_remote_desktop_and_xrdp/config.json")
 		if err == nil {
 			fmt.Printf("Using username from config.json: %s\n", config.User.Username)
 		}

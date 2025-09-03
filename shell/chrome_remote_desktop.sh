@@ -1,10 +1,13 @@
 #!/bin/bash
 
 # Check if script is run as root
-if [ "$EUID" -ne 0 ]; then 
+if [ "$EUID" -ne 0 ]; then
     echo "Please run as root (use sudo)"
     exit 1
 fi
+
+# Get the directory where this script is located
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Function to detect package manager
 detect_package_manager() {
@@ -42,19 +45,19 @@ echo "Detected package manager: $PACKAGE_MANAGER"
 case $PACKAGE_MANAGER in
     "apt")
         echo "Installing for Debian/Ubuntu based system..."
-        bash ./apt.sh
+        bash "$SCRIPT_DIR/apt.sh"
         ;;
     "dnf")
         echo "Installing for Red Hat/Fedora based system..."
-        bash ./dnf.sh
+        bash "$SCRIPT_DIR/dnf.sh"
         ;;
     "pacman")
         echo "Installing for Arch Linux based system..."
-        bash ./pacman.sh
+        bash "$SCRIPT_DIR/pacman.sh"
         ;;
     "zypper")
         echo "Installing for openSUSE based system..."
-        bash ./zypper.sh
+        bash "$SCRIPT_DIR/zypper.sh"
         ;;
     *)
         echo "Error: Unsupported package manager or Linux distribution"

@@ -2,6 +2,31 @@
 
 echo "Building Go tools..."
 
+# Check if Go is installed, install if missing
+if ! command -v go &> /dev/null; then
+    echo "Go is not installed. Installing Go..."
+
+    # Fix any interrupted dpkg configurations first
+    if dpkg --configure -a >/dev/null 2>&1; then
+        echo "Fixed any interrupted package configurations"
+    fi
+
+    # Update package list
+    if ! apt update; then
+        echo "⚠️  Warning: apt update failed, but continuing with installation..."
+    fi
+
+    # Install Go
+    if apt install -y golang-go; then
+        echo "✅ Go installed successfully"
+    else
+        echo "❌ Failed to install Go"
+        echo "Please install Go manually: sudo apt install golang-go"
+        echo "Or run: sudo dpkg --configure -a && sudo apt install golang-go"
+        exit 1
+    fi
+fi
+
 # Initialize Go module if needed
 if [ ! -f "go.mod" ]; then
     echo "Initializing Go module..."

@@ -16,16 +16,114 @@ draw_box() {
     local length=${#text}
     local padding=4
     local total_width=$((length + padding))
-    
+
     printf "${CYAN}╔"
     for ((i=0; i<total_width; i++)); do printf "═"; done
     printf "╗${NC}\n"
-    
+
     printf "${CYAN}║  %-${length}s  ║${NC}\n" "$text"
-    
+
     printf "${CYAN}╚"
     for ((i=0; i<total_width; i++)); do printf "═"; done
     printf "╝${NC}\n"
+}
+
+# Function to display the main menu
+show_menu() {
+    clear
+    echo
+    echo "Chrome Remote Desktop Setup Menu"
+    echo
+    echo "Choose an option:"
+    echo
+
+    echo "=== GO VERSION (Recommended) ==="
+    echo "1.  Auto-detect Chrome Remote Desktop    ./go/chrome-remote-desktop           # Installs: Chrome Remote Desktop + XFCE + LightDM + Firefox + user account (auto-builds if needed)"
+    echo "2.  Install Google Chrome                ./go/install-chrome                  # Installs: Google Chrome browser for your distribution (auto-builds if needed)"
+    echo "3.  Install Visual Studio Code           ./go/install-vscode                  # Installs: VS Code editor with official Microsoft repository (auto-builds if needed)"
+    echo "4.  Setup xRDP                           ./go/setup-xrdp                      # Installs: xRDP + XFCE + Firefox + VS Code + performance optimizations (auto-builds if needed)"
+    echo
+    echo "=== SHELL VERSION (Legacy) ==="
+    echo "5.  Auto-detect Chrome Remote Desktop    ./shell/chrome_remote_desktop.sh     # Installs: Chrome Remote Desktop + XFCE + LightDM + Firefox + user account"
+    echo "6.  Install Google Chrome                ./shell/chrome.sh                    # Installs: Google Chrome browser (supports apt/dnf/pacman/zypper)"
+    echo "7.  Install Visual Studio Code           ./shell/vscode.sh                    # Installs: VS Code editor (supports apt/dnf/pacman/zypper)"
+    echo "8.  Setup xRDP                           ./shell/setup_rdp.sh                 # Installs: xRDP + XFCE + Firefox + VS Code + system optimizations"
+    echo "9.  Build Go tools                       ./go/build-all.sh                    # Compiles: All Go binaries (chrome-remote-desktop, install-chrome, etc.)"
+    echo
+    echo "=== MAINTENANCE TOOLS ==="
+    echo "10. Update all tools                     ./update.sh                          # Updates: All installed tools + system packages + Go binaries"
+    echo "11. Uninstall all tools                  ./uninstall_tools.sh                 # Removes: All tools (Chrome, VS Code, xRDP, XFCE, Firefox, LightDM)"
+    echo "12. Uninstall Chrome Remote Desktop      ./uninstall_chrome_remote_desktop.sh # Removes: Chrome Remote Desktop + user account + config files"
+    echo "13. Install Go                           ./go/install_go.sh                   # Installs: Go programming language and toolchain"
+    echo
+    echo "0.  Exit"
+    echo
+    printf "Select option (0-13): "
+}
+
+# Function to run Go scripts with error handling
+run_go_script() {
+    local script="$1"
+    local description="$2"
+
+    # Check if Go binary exists, if not, try to build it
+    if [ ! -f "$script" ]; then
+        echo
+        printf "${YELLOW}Go binary not found. Attempting to build...${NC}\n"
+
+        # Try to build the Go binaries
+        if [ -f "./go/build-all.sh" ]; then
+            cd go
+            if ./build-all.sh; then
+                printf "${GREEN}✓ Go binaries built successfully!${NC}\n"
+                cd ..
+            else
+                printf "${RED}✗ Failed to build Go binaries${NC}\n"
+                read -p "Press Enter to continue..."
+                return 1
+            fi
+        else
+            printf "${RED}Error: build-all.sh not found!${NC}\n"
+            read -p "Press Enter to continue..."
+            return 1
+        fi
+    fi
+
+    if [ -f "$script" ]; then
+        echo
+        printf "${BLUE}Running: $description${NC}\n"
+        echo "----------------------------------------"
+        if "$script"; then
+            printf "\n${GREEN}✓ $description completed successfully!${NC}\n"
+        else
+            printf "\n${RED}✗ Error running $description${NC}\n"
+            read -p "Press Enter to continue..."
+        fi
+    else
+        printf "${RED}Error: Script $script not found after build attempt!${NC}\n"
+        read -p "Press Enter to continue..."
+    fi
+}
+
+# Function to run shell scripts with error handling
+run_shell_script() {
+    local script="$1"
+    local description="$2"
+
+    if [ -f "$script" ]; then
+        echo
+        printf "${BLUE}Running: $description${NC}\n"
+        echo "----------------------------------------"
+        if bash "$script"; then
+            printf "\n${GREEN}✓ $description completed successfully!${NC}\n"
+        else
+            printf "\n${RED}✗ Error running $description${NC}\n"
+            read -p "Press Enter to continue..."
+        fi
+    else
+        printf "${RED}Error: Script $script not found!${NC}\n"
+        read -p "Press Enter to continue..."
+    fi
 }
 
 # Function to check if running as root
@@ -37,197 +135,180 @@ check_root() {
     fi
 }
 
-# Function to build Go binaries if needed
-ensure_go_binaries() {
-    if [ ! -f "go-tools/chrome-remote-desktop" ]; then
-        printf "${BLUE}Building Go binaries...${NC}\n"
-        cd go-tools
-        if ! bash build-all.sh; then
-            printf "${RED}Failed to build Go binaries. Make sure Go is installed.${NC}\n"
-            cd ..
-            return 1
-        fi
-        cd ..
-        printf "${GREEN}✓ Go binaries built successfully!${NC}\n"
-    fi
-    return 0
-}
-
-# Function to display main menu
-show_menu() {
-    clear
+# Function to show help
+show_help() {
+    echo "Chrome Remote Desktop Setup - Command Line Options"
+    echo "=================================================="
     echo
-    draw_box "Server Setup Tools - Main Menu"
+    echo "USAGE:"
+    echo "  ./run.sh [option]          # Run specific tool"
+    echo "  ./run.sh                   # Interactive menu"
+    echo "  ./run.sh help              # Show this help"
     echo
-    printf "${WHITE}Choose an option:${NC}\n\n"
-    
-    printf "${GREEN}=== Installation Tools ===${NC}\n"
-    printf "${CYAN}1.${NC}  Auto-detect and install Chrome Remote Desktop    ${YELLOW}./run.sh chrome-remote-desktop${NC}    ${GREEN}# Multi-distro installer${NC}\n"
-    printf "${CYAN}2.${NC}  Install Google Chrome Browser                     ${YELLOW}./run.sh install-chrome${NC}          ${GREEN}# Web browser${NC}\n"
-    printf "${CYAN}3.${NC}  Install Visual Studio Code                        ${YELLOW}./run.sh install-vscode${NC}          ${GREEN}# Code editor${NC}\n"
-    printf "${CYAN}4.${NC}  Setup xRDP for Microsoft RDP                      ${YELLOW}./run.sh setup-xrdp${NC}              ${GREEN}# Remote desktop protocol${NC}\n"
+    echo "INSTALLATION OPTIONS:"
+    echo "  1, chrome-remote-desktop   Auto-detect and install Chrome Remote Desktop (Go - auto-builds if needed)"
+    echo "  2, install-chrome          Install Google Chrome Browser (Go - auto-builds if needed)"
+    echo "  3, install-vscode          Install Visual Studio Code (Go - auto-builds if needed)"
+    echo "  4, setup-xrdp              Setup xRDP (Go - auto-builds if needed)"
+    echo "  5, chrome-remote-desktop-shell  Auto-detect Chrome Remote Desktop (Shell)"
+    echo "  6, chrome-shell            Install Google Chrome (Shell)"
+    echo "  7, vscode-shell            Install Visual Studio Code (Shell)"
+    echo "  8, rdp-shell               Setup xRDP (Shell)"
+    echo "  9, build-go                Build Go tools"
     echo
-    printf "${GREEN}=== Utilities ===${NC}\n"
-    printf "${CYAN}5.${NC}  Build Go Tools                                     ${YELLOW}./run.sh build${NC}                   ${GREEN}# Compile binaries${NC}\n"
-    printf "${CYAN}6.${NC}  Show All Commands                                  ${YELLOW}./run.sh help${NC}                    ${GREEN}# Command reference${NC}\n"
+    echo "MAINTENANCE OPTIONS:"
+    echo "  10, update                 Update all tools and system"
+    echo "  11, uninstall-tools        Uninstall all tools"
+    echo "  12, uninstall              Uninstall Chrome Remote Desktop and user"
+    echo "  13, install-go             Install Go programming language"
     echo
-    printf "${RED}0.${NC}  Exit\n"
+    echo "EXAMPLES:"
+    echo "  sudo ./run.sh 1                    # Install Chrome Remote Desktop"
+    echo "  sudo ./run.sh install-chrome       # Install Chrome (named option)"
+    echo "  sudo ./run.sh update               # Update all tools"
+    echo "  sudo ./run.sh uninstall-tools      # Remove all tools"
     echo
-    printf "${YELLOW}Enter your choice [1-6,0]: ${NC}"
-}
-
-# Function to run command with error handling
-run_command() {
-    local cmd="$1"
-    local description="$2"
-    
-    printf "${BLUE}Running: $description${NC}\n"
-    echo "========================================"
-    
-    if eval "$cmd"; then
-        printf "\n${GREEN}✓ $description completed successfully!${NC}\n"
-    else
-        printf "\n${RED}✗ Error running $description${NC}\n"
-        read -p "Press Enter to continue..."
-    fi
-}
-
-# Function to show all commands
-show_all_commands() {
-    clear
-    echo
-    draw_box "All Available Commands"
-    echo
-    printf "${WHITE}Direct CLI Commands:${NC}\n\n"
-    
-    printf "${GREEN}Chrome Remote Desktop Tools:${NC}\n"
-    printf "  ${CYAN}sudo ./run.sh chrome-remote-desktop${NC}    # Auto-detect and install Chrome Remote Desktop\n"
-    printf "  ${CYAN}sudo ./run.sh install-chrome${NC}           # Install Google Chrome Browser\n"
-    printf "  ${CYAN}sudo ./run.sh install-vscode${NC}           # Install Visual Studio Code\n"
-    printf "  ${CYAN}sudo ./run.sh setup-xrdp${NC}               # Setup xRDP for Microsoft RDP\n\n"
-    
-    printf "${YELLOW}Direct Shell Script Commands (Advanced):${NC}\n"
-    printf "  ${CYAN}sudo bash shell/chrome_remote_desktop.sh${NC} # Auto-detect installer\n"
-    printf "  ${CYAN}sudo bash shell/apt.sh${NC}                  # Debian/Ubuntu installer\n"
-    printf "  ${CYAN}sudo bash shell/dnf.sh${NC}                  # Red Hat/Fedora installer\n"
-    printf "  ${CYAN}sudo bash shell/pacman.sh${NC}               # Arch Linux installer\n"
-    printf "  ${CYAN}sudo bash shell/zypper.sh${NC}               # openSUSE installer\n"
-    printf "  ${CYAN}sudo bash shell/chrome.sh${NC}               # Install Google Chrome\n"
-    printf "  ${CYAN}sudo bash shell/vscode.sh${NC}               # Install Visual Studio Code\n"
-    printf "  ${CYAN}sudo bash shell/setup_rdp.sh${NC}            # Setup xRDP\n\n"
-    
-    printf "${BLUE}Build & Utility:${NC}\n"
-    printf "  ${CYAN}./run.sh build${NC}                          # Build Go tools\n"
-    printf "  ${CYAN}./run.sh help${NC}                           # Show this help\n\n"
-    
-    read -p "Press Enter to return to main menu..."
 }
 
 # Main program loop
 main() {
     check_root
-    
-    while true; do
-        show_menu
-        read -r choice
-        
-        case $choice in
-            1)
-                ensure_go_binaries
-                run_command "./go-tools/chrome-remote-desktop" "Chrome Remote Desktop Installation"
+
+    # Check for command-line arguments
+    if [[ $# -gt 0 ]]; then
+        case "$1" in
+            1|chrome-remote-desktop)
+                run_go_script "./go/chrome-remote-desktop" "Auto-detect and install Chrome Remote Desktop (Go)"
                 ;;
-            2)
-                ensure_go_binaries
-                run_command "./go-tools/install-chrome" "Google Chrome Installation"
+            2|install-chrome)
+                run_go_script "./go/install-chrome" "Google Chrome Browser installation (Go)"
                 ;;
-            3)
-                ensure_go_binaries
-                run_command "./go-tools/install-vscode" "Visual Studio Code Installation"
+            3|install-vscode)
+                run_go_script "./go/install-vscode" "Visual Studio Code installation (Go)"
                 ;;
-            4)
-                ensure_go_binaries
-                run_command "./go-tools/setup-xrdp" "xRDP Setup"
+            4|setup-xrdp)
+                run_go_script "./go/setup-xrdp" "xRDP setup (Go)"
                 ;;
-            5)
-                run_command "cd go-tools && bash build-all.sh" "Building Go Tools"
+            5|chrome-remote-desktop-shell)
+                run_shell_script "./shell/chrome_remote_desktop.sh" "Auto-detect and install Chrome Remote Desktop (Shell)"
                 ;;
-            6)
-                show_all_commands
+            6|chrome-shell)
+                run_shell_script "./shell/chrome.sh" "Google Chrome Browser installation (Shell)"
                 ;;
-            0)
-                echo
-                printf "${GREEN}Thank you for using Server Setup Tools!${NC}\n"
+            7|vscode-shell)
+                run_shell_script "./shell/vscode.sh" "Visual Studio Code installation (Shell)"
+                ;;
+            8|rdp-shell)
+                run_shell_script "./shell/setup_rdp.sh" "xRDP setup (Shell)"
+                ;;
+            9|build-go)
+                run_go_script "./go/build-all.sh" "Build Go tools"
+                ;;
+            10|update)
+                run_shell_script "./update.sh" "Update all tools and system"
+                ;;
+            11|uninstall-tools)
+                run_shell_script "./uninstall_tools.sh" "Uninstall all tools"
+                ;;
+            12|uninstall)
+                run_shell_script "./uninstall.sh" "Uninstall Chrome Remote Desktop and user"
+                ;;
+            13|install-go)
+                run_shell_script "./go/install_go.sh" "Install Go programming language"
+                ;;
+            help|--help|-h)
+                show_help
                 exit 0
                 ;;
             *)
-                printf "${RED}Invalid option. Please choose 1-6 or 0.${NC}\n"
+                printf "${RED}Invalid option: $1${NC}\n"
+                show_help
+                exit 1
+                ;;
+        esac
+        exit 0
+    fi
+
+    # Interactive menu mode
+    while true; do
+        show_menu
+        read -r choice
+
+        case $choice in
+            1)
+                run_go_script "./go/chrome-remote-desktop" "Auto-detect and install Chrome Remote Desktop (Go)"
+                ;;
+            2)
+                run_go_script "./go/install-chrome" "Google Chrome Browser installation (Go)"
+                ;;
+            3)
+                run_go_script "./go/install-vscode" "Visual Studio Code installation (Go)"
+                ;;
+            4)
+                run_go_script "./go/setup-xrdp" "xRDP setup (Go)"
+                ;;
+            5)
+                run_shell_script "./shell/chrome_remote_desktop.sh" "Auto-detect and install Chrome Remote Desktop (Shell)"
+                ;;
+            6)
+                run_shell_script "./shell/chrome.sh" "Google Chrome Browser installation (Shell)"
+                ;;
+            7)
+                run_shell_script "./shell/vscode.sh" "Visual Studio Code installation (Shell)"
+                ;;
+            8)
+                run_shell_script "./shell/setup_rdp.sh" "xRDP setup (Shell)"
+                ;;
+            9)
+                run_go_script "./go/build-all.sh" "Build Go tools"
+                ;;
+            10)
+                run_script "./update.sh" "Update all tools"
+                ;;
+            11)
+                run_script "./uninstall_tools.sh" "Uninstall all tools"
+                ;;
+            12)
+                run_script "./uninstall_chrome_remote_desktop.sh" "Uninstall Chrome Remote Desktop"
+                ;;
+            13)
+                run_script "./go/install_go.sh" "Install Go programming language"
+                ;;
+            0)
+                echo
+                printf "${GREEN}Thank you for using Chrome Remote Desktop Setup!${NC}\n"
+                exit 0
+                ;;
+            *)
+                printf "${RED}Invalid option. Please choose 1-13 or 0.${NC}\n"
+                read -p "Press Enter to continue..."
+                ;;
+            10)
+                run_shell_script "./update.sh" "Update all tools and system"
+                ;;
+            11)
+                run_shell_script "./uninstall_tools.sh" "Uninstall all tools"
+                ;;
+            12)
+                run_shell_script "./uninstall.sh" "Uninstall Chrome Remote Desktop and user"
+                ;;
+            0)
+                echo
+                printf "${GREEN}Thank you for using Chrome Remote Desktop Setup!${NC}\n"
+                exit 0
+                ;;
+            *)
+                printf "${RED}Invalid option. Please choose 0-12.${NC}\n"
                 read -p "Press Enter to continue..."
                 ;;
         esac
-        
-        if [ "$choice" != "0" ] && [ "$choice" != "6" ]; then
+
+        if [ "$choice" != "0" ]; then
             echo
             read -p "Press Enter to return to main menu..."
         fi
     done
 }
-
-# Handle direct command line arguments
-if [ $# -gt 0 ]; then
-    case $1 in
-        "chrome-remote-desktop")
-            check_root
-            ensure_go_binaries
-            ./go-tools/chrome-remote-desktop
-            exit $?
-            ;;
-        "install-chrome")
-            check_root
-            ensure_go_binaries
-            ./go-tools/install-chrome
-            exit $?
-            ;;
-        "install-vscode")
-            check_root
-            ensure_go_binaries
-            ./go-tools/install-vscode
-            exit $?
-            ;;
-        "setup-xrdp")
-            check_root
-            ensure_go_binaries
-            ./go-tools/setup-xrdp
-            exit $?
-            ;;
-
-        "build")
-            printf "${BLUE}Building Go tools...${NC}\n"
-            cd go-tools && bash build-all.sh
-            exit $?
-            ;;
-        "help"|"--help"|"-h")
-            echo "Server Setup Tools"
-            echo ""
-            echo "Usage: $0 [COMMAND]"
-            echo ""
-            echo "Commands:"
-            echo "  chrome-remote-desktop    Auto-detect and install Chrome Remote Desktop"
-            echo "  install-chrome           Install Google Chrome Browser"
-            echo "  install-vscode           Install Visual Studio Code"
-            echo "  setup-xrdp               Setup xRDP for Microsoft RDP"
-            echo "  build                    Build Go tools"
-            echo "  help                     Show all available commands"
-            echo ""
-            echo "Without arguments, shows interactive main menu"
-            exit 0
-            ;;
-        *)
-            printf "${RED}Unknown command: $1${NC}\n"
-            printf "Run '$0 help' for usage information\n"
-            exit 1
-            ;;
-    esac
-fi
 
 # Run the main program
 main

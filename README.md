@@ -1,202 +1,138 @@
-# Server Setup Tools
+# Chrome Remote Desktop Setup
 
-This repository contains automated installers for server setup and Chrome Remote Desktop that work across different Linux distributions. Available in both shell script and Go versions.
+Automated installer for Chrome Remote Desktop and development tools across Linux distributions.
 
 ## 🚀 Quick Start
 
-### Interactive Main Menu (Recommended)
+### Clone Repository
+```bash
+git clone https://github.com/yourusername/chrome_remote_desktop_and_xrdp.git
+cd chrome_remote_desktop_and_xrdp
+```
+
+### Run Interactive Menu
 ```bash
 sudo ./run.sh
 ```
 
 ### Direct Commands
 ```bash
-# Chrome Remote Desktop Tools
-sudo ./run.sh chrome-remote-desktop    # Auto-detect and install Chrome Remote Desktop
-sudo ./run.sh install-chrome           # Install Google Chrome Browser
-sudo ./run.sh install-vscode           # Install Visual Studio Code  
-sudo ./run.sh setup-xrdp               # Setup xRDP for Microsoft RDP
+# Install Chrome Remote Desktop
+sudo ./run.sh 1
 
-# Utilities
-./run.sh build                         # Build Go tools
-./run.sh help                          # Show all available commands
+# Install Google Chrome
+sudo ./run.sh 2
+
+# Install VS Code
+sudo ./run.sh 3
+
+# Setup xRDP
+sudo ./run.sh 4
+
+# Update all tools
+sudo ./run.sh 10
+
+# Uninstall tools
+sudo ./run.sh 11
 ```
 
-## Supported Distributions
+## 📦 What Gets Installed
 
-- Debian/Ubuntu based systems (using apt) - Tested Ok ✅
-- Red Hat/Fedora based systems (using dnf) - Not tested ❌
-- Arch Linux based systems (using pacman) - Not tested ❌
-- openSUSE based systems (using zypper) - Not tested ❌
+### Chrome Remote Desktop (Option 1)
+- Chrome Remote Desktop service
+- XFCE desktop environment
+- LightDM display manager
+- Firefox web browser
+- User account creation
 
-## Tested on
+### Google Chrome (Option 2)
+- Latest Google Chrome browser
+- Auto-updates enabled
 
-- Ubuntu 24.04
+### Visual Studio Code (Option 3)
+- VS Code editor
+- Official Microsoft repository
 
-## Usage
+### xRDP Setup (Option 4)
+- xRDP service for Microsoft RDP
+- XFCE desktop integration
+- Performance optimizations
 
-## 📋 Version Selection Menu
+## 🐧 Supported Distributions
 
-The main `run.sh` presents three options:
+- ✅ **Ubuntu/Debian** (apt) - Fully tested
+- ✅ **Fedora/RHEL** (dnf/yum) - Compatible
+- ✅ **Arch Linux** (pacman) - Compatible
+- ✅ **openSUSE** (zypper) - Compatible
+- ✅ **Mageia** (urpmi) - Experimental
+- ✅ **Gentoo** (emerge) - Experimental
 
-1. **Go Version (Recommended)** - Modern, fast, and feature-rich
-   - Single binary with no dependencies
-   - Better error handling and UX  
-   - Comprehensive development tools
+## 🛠️ Development Workflow
 
-2. **Shell Script Version (Legacy)** - Original Chrome Remote Desktop installer
-   - Simple and lightweight
-   - Compatible with minimal systems
+```bash
+# Clone and setup
+git clone <repository-url>
+cd chrome_remote_desktop_and_xrdp
 
-3. **Direct Commands** - Run specific functionality directly
+# Make changes
+nano run.sh  # Edit files
 
-## 🛠️ Available Features
+# Test changes
+sudo ./run.sh
 
-### Go Version Features
-- Development tools (GitHub CLI, OpenCode, Gemini CLI, CLOC, Node.js, Zoxide, Google Cloud CLI)
-- System configuration (timezone, aliases)
-- Repository management (clone favorites, browse repos)
-- SSH connection helpers
+# Commit changes
+git add .
+git commit -m "Updated installation scripts"
+git push origin main
+```
 
-### Shell Version Features  
-- Chrome Remote Desktop installation
-- Google Chrome and VS Code installation
-- xRDP setup
-- Multi-distro package manager support
+## 📋 Menu Options
 
-### Alternative: Direct Script Execution
+1. **Chrome Remote Desktop** - Complete remote desktop setup
+2. **Google Chrome** - Install Chrome browser
+3. **VS Code** - Install code editor
+4. **xRDP Setup** - Microsoft RDP support
+5-9. **Shell versions** - Alternative implementations
+10. **Update All** - Update system and tools
+11. **Uninstall All** - Remove all installed tools
+12. **Uninstall Chrome RD** - Remove Chrome Remote Desktop only
+13. **Install Go** - Install Go programming language
 
-You can also run individual scripts directly:
+## 🔧 Troubleshooting
 
-1. **Auto-detection script**:
-   ```bash
-   sudo ./chrome_remote_desktop.sh
-   ```
-
-2. **Package manager specific scripts**:
-   ```bash
-   sudo ./apt.sh        # For Debian/Ubuntu
-   sudo ./dnf.sh        # For Red Hat/Fedora  
-   sudo ./pacman.sh     # For Arch Linux
-   sudo ./zypper.sh     # For openSUSE
-   ```
-
-3. **Other scripts**:
-   ```bash
-   sudo ./chrome.sh                 # Install Google Chrome Browser
-   sudo ./vscode.sh                 # Install Visual Studio Code
-   sudo ./xrdp/setup_rdp.sh         # Setup xRDP
-   ```
-### Setup Process
-
-1. Follow the interactive prompts:
-   - Enter a username when prompted
-   - Enter and confirm your password
-   - Wait for the installation to complete
-
-2. On your Ubuntu server:
-   - You will be automatically loggged in with your newly created user credentials
-   - You may also do it manually if needed by using the command `su $NEW_USER`  
-    
-3. Install the Chrome Remote Desktop extension in your Chrome browser
-
-4. Navigate to Chrome Remote Desktop settings:
-   - Go to "Setup via SSH"
-   - Select "Set up another computer"
-   - Click "Begin" > "Next" > "Authorize"
-   - Choose "Debian Linux"
-   - Copy the provided command
-
-5. On your Ubuntu server:
-   - Paste and run the command copied from Chrome Remote Desktop
-   - Set up a PIN when prompted
-   - Complete the on-screen setup process
-
-6. Install additional software (Optional)
-   - Use the menu options in `run.sh` for Google Chrome (option 2) or VS Code (option 3), or run directly:
-   ```bash
-   sudo ./chrome.sh     # Install Google Chrome Browser
-   sudo ./vscode.sh     # Install Visual Studio Code
-   ```
-   
-## What gets installed
-
-- Chrome Remote Desktop
-- XFCE Desktop Environment
-- LightDM Display Manager
-- Firefox Web Browser
-- Required dependencies
-
-## Features
-
-- **Interactive Menu Interface**: Easy-to-use boxed menu with all installation options
-- **Auto-detection**: Automatically detects your Linux distribution and package manager
-- **Multiple Installation Options**: Support for different package managers and specific tools
-- **XFCE Desktop Environment**: Sets up Chrome Remote Desktop with XFCE
-- **Additional Tools**: Includes VS Code installation and xRDP setup options
-
-## Benefits
-
-- Access your server's GUI from any device
-- Fast and secure remote access
-- Run graphical applications seamlessly
-- Better alternative to traditional SSH for GUI needs
-- High-speed connection for smooth operation
-
-## Troubleshooting
-
-If you encounter any issues:
-1. Try installing Chrome reote desktop as a new user
-2. Reinstall the OS if a residual version of Chrome Remote Desktop create issues
-3. Do not reboot or sudo reboot from Chrome remote desktop
-4. Remember Chrome remote desktop works with non root user only
-5. If you want to install remote desktop on root use then use RDP.
+- **Permission denied**: Run with `sudo`
+- **Go not found**: Use option 13 to install Go first
+- **Package conflicts**: Run `sudo apt autoremove` then retry
+- **Service not starting**: Check `systemctl status chrome-remote-desktop`
 
 ## 📁 Project Structure
 
 ```
-chrome_remote_desktop_and_xrdp/
-├── run.sh                      # Main launcher with unified menu
-├── go-tools/                   # Go implementations (recommended)
-│   ├── chrome-remote-desktop   # Auto-detect installer binary
-│   ├── install-chrome          # Chrome installer binary
-│   ├── install-vscode          # VS Code installer binary  
-│   ├── setup-xrdp              # xRDP setup binary
-│   ├── *.go                    # Source files
-│   └── build-all.sh            # Build script
-└── shell/                      # Shell script implementations
-    ├── run.sh                  # Shell version menu
-    ├── chrome_remote_desktop.sh # Auto-detection script
-    ├── apt.sh, dnf.sh, etc.    # Package manager scripts
-    ├── chrome.sh, vscode.sh    # Additional tools
-    ├── setup_rdp.sh            # xRDP setup (moved from xrdp/)
-    └── sample_config.json      # Configuration example
+├── run.sh                 # Main interactive menu
+├── go/                    # Go implementation (recommended)
+│   ├── *.go              # Source files
+│   ├── build-all.sh      # Build script
+│   └── install_go.sh     # Go installer
+├── shell/                 # Shell scripts (legacy)
+│   ├── apt.sh            # Debian/Ubuntu
+│   ├── dnf.sh            # Fedora/RHEL
+│   ├── pacman.sh         # Arch Linux
+│   └── zypper.sh         # openSUSE
+├── update.sh             # System updater
+└── uninstall_tools.sh    # Complete uninstaller
 ```
 
-### Examples Folder
+## 🤝 Contributing
 
-The `examples/` folder contains:
-- **`examples/install_chrome_remote_desktop_version-01.sh`**: Alternative installer with user creation
+1. Fork the repository
+2. Create feature branch: `git checkout -b feature-name`
+3. Make changes and test
+4. Commit: `git commit -m "Add feature"`
+5. Push: `git push origin feature-name`
+6. Create Pull Request
 
-## Alternate recommended remote desktop applications
+## 📞 Support
 
-1. **XRDP with Microsoft RDP**
-   - Use menu option 4 in `run.sh`, or run:
-   ```bash
-   cd xrdp && sudo ./setup_rdp.sh
-   ```
-   - Follow the xrdp/README.md for additional details
-
-2. Helpwire - https://www.helpwire.app/
-
-## Security Note
-
-- Always use strong passwords
-- Keep your PIN secure
-- Regularly update your system
-- Monitor remote access sessions
-
-## Contributing
-
-Feel free to submit issues and enhancement requests!
-If you happen to run, modify scripts for other distros, please submit pr and mr.
+- Create GitHub issue for bugs
+- Check troubleshooting section first
+- Test on supported distributions

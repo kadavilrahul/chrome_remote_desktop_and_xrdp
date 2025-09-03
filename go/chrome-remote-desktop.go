@@ -29,7 +29,7 @@ func main() {
 	}
 
 	// Load or create config
-	config, err := loadOrCreateConfig("../config.json")
+	config, err := loadOrCreateConfig("/root/chrome_remote_desktop_and_xrdp/config.json")
 	if err != nil {
 		fmt.Printf("Error handling config: %v\n", err)
 		os.Exit(1)
@@ -43,6 +43,7 @@ func main() {
 
 	var scriptPath string
 	switch packageManager {
+	// Primary package managers
 	case "apt":
 		fmt.Println("Installing for Debian/Ubuntu based system...")
 		scriptPath = "shell/apt.sh"
@@ -55,13 +56,49 @@ func main() {
 	case "zypper":
 		fmt.Println("Installing for openSUSE based system...")
 		scriptPath = "shell/zypper.sh"
+
+	// Secondary package managers (experimental support)
+	case "yum":
+		fmt.Println("Installing for Red Hat/CentOS based system (yum)...")
+		fmt.Println("Note: yum support is experimental. Consider using dnf if available.")
+		scriptPath = "shell/dnf.sh" // Reuse dnf script as yum is similar
+	case "aptitude":
+		fmt.Println("Installing for Debian/Ubuntu based system (aptitude)...")
+		scriptPath = "shell/apt.sh" // Reuse apt script as aptitude is compatible
+	case "urpmi":
+		fmt.Println("Installing for Mageia/Mandriva based system...")
+		fmt.Println("Note: urpmi support is experimental.")
+		fmt.Println("Error: No installation script available for urpmi yet")
+		os.Exit(1)
+	case "emerge":
+		fmt.Println("Installing for Gentoo based system...")
+		fmt.Println("Note: emerge support is experimental.")
+		fmt.Println("Error: No installation script available for emerge yet")
+		os.Exit(1)
+	case "slackpkg":
+		fmt.Println("Installing for Slackware based system...")
+		fmt.Println("Note: slackpkg support is experimental.")
+		fmt.Println("Error: No installation script available for slackpkg yet")
+		os.Exit(1)
+	case "tce":
+		fmt.Println("Installing for Tiny Core Linux...")
+		fmt.Println("Note: Tiny Core Linux support is experimental.")
+		fmt.Println("Error: No installation script available for tce yet")
+		os.Exit(1)
+
 	default:
 		fmt.Println("Error: Unsupported package manager or Linux distribution")
-		fmt.Println("This script supports the following distributions:")
-		fmt.Println("- Debian/Ubuntu (apt)")
-		fmt.Println("- Red Hat/Fedora (dnf)")
+		fmt.Println("Currently supported distributions:")
+		fmt.Println("- Debian/Ubuntu (apt, aptitude)")
+		fmt.Println("- Red Hat/Fedora/CentOS (dnf, yum)")
 		fmt.Println("- Arch Linux (pacman)")
 		fmt.Println("- openSUSE (zypper)")
+		fmt.Println("")
+		fmt.Println("Experimental support for:")
+		fmt.Println("- Mageia/Mandriva (urpmi) - Not implemented yet")
+		fmt.Println("- Gentoo (emerge) - Not implemented yet")
+		fmt.Println("- Slackware (slackpkg) - Not implemented yet")
+		fmt.Println("- Tiny Core Linux (tce) - Not implemented yet")
 		os.Exit(1)
 	}
 
@@ -151,9 +188,19 @@ func isRoot() bool {
 }
 
 func detectPackageManager() string {
+	// Primary package managers (most common)
 	managers := []string{"apt", "dnf", "pacman", "zypper"}
 
 	for _, manager := range managers {
+		if _, err := exec.LookPath(manager); err == nil {
+			return manager
+		}
+	}
+
+	// Secondary package managers (less common but still supported)
+	secondaryManagers := []string{"yum", "aptitude", "urpmi", "emerge", "slackpkg", "tce"}
+
+	for _, manager := range secondaryManagers {
 		if _, err := exec.LookPath(manager); err == nil {
 			return manager
 		}
