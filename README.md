@@ -7,6 +7,9 @@ Automated installer for Chrome Remote Desktop and development tools across Linux
 ### Clone Repository
 ```bash
 git clone https://github.com/yourusername/chrome_remote_desktop_and_xrdp.git
+```
+
+```bash
 cd chrome_remote_desktop_and_xrdp
 ```
 
@@ -15,26 +18,6 @@ cd chrome_remote_desktop_and_xrdp
 sudo ./run.sh
 ```
 
-### Direct Commands
-```bash
-# Install Chrome Remote Desktop
-sudo ./run.sh 1
-
-# Install Google Chrome
-sudo ./run.sh 2
-
-# Install VS Code
-sudo ./run.sh 3
-
-# Setup xRDP
-sudo ./run.sh 4
-
-# Update all tools
-sudo ./run.sh 10
-
-# Uninstall tools
-sudo ./run.sh 11
-```
 
 ## 📦 What Gets Installed
 
@@ -67,36 +50,22 @@ sudo ./run.sh 11
 - ✅ **Mageia** (urpmi) - Experimental
 - ✅ **Gentoo** (emerge) - Experimental
 
-## 🛠️ Development Workflow
-
-```bash
-# Clone and setup
-git clone <repository-url>
-cd chrome_remote_desktop_and_xrdp
-
-# Make changes
-nano run.sh  # Edit files
-
-# Test changes
-sudo ./run.sh
-
-# Commit changes
-git add .
-git commit -m "Updated installation scripts"
-git push origin main
-```
 
 ## 📋 Menu Options
 
-1. **Chrome Remote Desktop** - Complete remote desktop setup
-2. **Google Chrome** - Install Chrome browser
-3. **VS Code** - Install code editor
-4. **xRDP Setup** - Microsoft RDP support
-5-9. **Shell versions** - Alternative implementations
-10. **Update All** - Update system and tools
-11. **Uninstall All** - Remove all installed tools
-12. **Uninstall Chrome RD** - Remove Chrome Remote Desktop only
-13. **Install Go** - Install Go programming language
+**Installation Tools:**
+- **Chrome Remote Desktop** - Complete remote desktop setup
+- **Google Chrome** - Install Chrome browser
+- **VS Code** - Install code editor
+- **xRDP Setup** - Microsoft RDP support
+- **Shell versions** - Alternative implementations
+- **Build Go tools** - Compile Go binaries
+
+**Maintenance Tools:**
+- **Update all tools** - Update system and tools
+- **Uninstall all tools** - Remove all installed tools
+- **Uninstall Chrome RD** - Remove Chrome Remote Desktop only
+- **Install Go** - Install Go programming language
 
 ## 🔧 Troubleshooting
 

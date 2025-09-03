@@ -38,27 +38,27 @@ show_menu() {
     echo
 
     echo "=== GO VERSION (Recommended) ==="
-    echo "1.  Auto-detect Chrome Remote Desktop    ./go/chrome-remote-desktop           # Installs: Chrome Remote Desktop + XFCE + LightDM + Firefox + user account (auto-builds if needed)"
-    echo "2.  Install Google Chrome                ./go/install-chrome                  # Installs: Google Chrome browser for your distribution (auto-builds if needed)"
-    echo "3.  Install Visual Studio Code           ./go/install-vscode                  # Installs: VS Code editor with official Microsoft repository (auto-builds if needed)"
-    echo "4.  Setup xRDP                           ./go/setup-xrdp                      # Installs: xRDP + XFCE + Firefox + VS Code + performance optimizations (auto-builds if needed)"
+    echo "Auto-detect Chrome Remote Desktop        ./go/chrome-remote-desktop           # Installs: Chrome Remote Desktop + XFCE + LightDM + Firefox + user account (auto-builds if needed)"
+    echo "Install Google Chrome                    ./go/install-chrome                  # Installs: Google Chrome browser for your distribution (auto-builds if needed)"
+    echo "Install Visual Studio Code               ./go/install-vscode                  # Installs: VS Code editor with official Microsoft repository (auto-builds if needed)"
+    echo "Setup xRDP                              ./go/setup-xrdp                      # Installs: xRDP + XFCE + Firefox + VS Code + performance optimizations (auto-builds if needed)"
     echo
     echo "=== SHELL VERSION (Legacy) ==="
-    echo "5.  Auto-detect Chrome Remote Desktop    ./shell/chrome_remote_desktop.sh     # Installs: Chrome Remote Desktop + XFCE + LightDM + Firefox + user account"
-    echo "6.  Install Google Chrome                ./shell/chrome.sh                    # Installs: Google Chrome browser (supports apt/dnf/pacman/zypper)"
-    echo "7.  Install Visual Studio Code           ./shell/vscode.sh                    # Installs: VS Code editor (supports apt/dnf/pacman/zypper)"
-    echo "8.  Setup xRDP                           ./shell/setup_rdp.sh                 # Installs: xRDP + XFCE + Firefox + VS Code + system optimizations"
-    echo "9.  Build Go tools                       ./go/build-all.sh                    # Compiles: All Go binaries (chrome-remote-desktop, install-chrome, etc.)"
+    echo "Auto-detect Chrome Remote Desktop        ./shell/chrome_remote_desktop.sh     # Installs: Chrome Remote Desktop + XFCE + LightDM + Firefox + user account"
+    echo "Install Google Chrome                    ./shell/chrome.sh                    # Installs: Google Chrome browser (supports apt/dnf/pacman/zypper)"
+    echo "Install Visual Studio Code               ./shell/vscode.sh                    # Installs: VS Code editor (supports apt/dnf/pacman/zypper)"
+    echo "Setup xRDP                              ./shell/setup_rdp.sh                 # Installs: xRDP + XFCE + Firefox + VS Code + system optimizations"
+    echo "Build Go tools                          ./go/build-all.sh                    # Compiles: All Go binaries (chrome-remote-desktop, install-chrome, etc.)"
     echo
     echo "=== MAINTENANCE TOOLS ==="
-    echo "10. Update all tools                     ./update.sh                          # Updates: All installed tools + system packages + Go binaries"
-    echo "11. Uninstall all tools                  ./uninstall_tools.sh                 # Removes: All tools (Chrome, VS Code, xRDP, XFCE, Firefox, LightDM)"
-    echo "12. Uninstall Chrome Remote Desktop      ./uninstall_chrome_remote_desktop.sh # Removes: Chrome Remote Desktop + user account + config files"
-    echo "13. Install Go                           ./go/install_go.sh                   # Installs: Go programming language and toolchain"
+    echo "Update all tools                        ./update.sh                          # Updates: All installed tools + system packages + Go binaries"
+    echo "Uninstall all tools                      ./uninstall_tools.sh                 # Removes: All tools (Chrome, VS Code, xRDP, XFCE, Firefox, LightDM)"
+    echo "Uninstall Chrome Remote Desktop          ./uninstall_chrome_remote_desktop.sh # Removes: Chrome Remote Desktop + user account + config files"
+    echo "Install Go                              ./go/install_go.sh                   # Installs: Go programming language and toolchain"
     echo
-    echo "0.  Exit"
+    echo "Exit"
     echo
-    printf "Select option (0-13): "
+    printf "Type the tool name or command: "
 }
 
 # Function to run Go scripts with error handling
