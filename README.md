@@ -1,6 +1,38 @@
-# Chrome Remote Desktop Installer
+# Server Setup Tools
 
-This is an automated installer for Chrome Remote Desktop that works across different Linux distributions. The installer provides both a user-friendly menu interface and individual scripts for different package managers.
+This repository contains automated installers for server setup and Chrome Remote Desktop that work across different Linux distributions. Available in both shell script and Go versions.
+
+## 🚀 Quick Start
+
+### Interactive Version Selection (Recommended)
+```bash
+sudo ./run.sh
+```
+
+### Direct Commands
+```bash
+# Run Go version directly
+sudo ./run.sh go
+
+# Run Shell version directly
+sudo ./run.sh shell
+
+# Build Go binary
+./run.sh build
+
+# Show help
+./run.sh --help
+```
+
+### Manual Execution
+```bash
+# Go version
+cd go/ && make build
+sudo ./build/chrome-remote-desktop-installer
+
+# Shell version
+sudo bash shell/run.sh
+```
 
 ## Supported Distributions
 
@@ -15,22 +47,34 @@ This is an automated installer for Chrome Remote Desktop that works across diffe
 
 ## Usage
 
-### Quick Start (Recommended)
+## 📋 Version Selection Menu
 
-1. Clone the repository and run the interactive menu:
-   ```bash
-   git clone https://github.com/kadavilrahul/chrome_remote_desktop_and_xrdp && cd chrome_remote_desktop_and_xrdp
-   ```
-   ```bash
-   bash run.sh
-   ```
+The main `run.sh` presents three options:
 
-2. Use the menu to select your preferred installation option:
-   - **Option 1**: Auto-detect and install Chrome Remote Desktop (recommended)
-   - **Option 2**: Install Google Chrome Browser
-   - **Option 3**: Install Visual Studio Code
-   - **Option 4**: Setup xRDP
-   - **Option 5**: Exit
+1. **Go Version (Recommended)** - Modern, fast, and feature-rich
+   - Single binary with no dependencies
+   - Better error handling and UX  
+   - Comprehensive development tools
+
+2. **Shell Script Version (Legacy)** - Original Chrome Remote Desktop installer
+   - Simple and lightweight
+   - Compatible with minimal systems
+
+3. **Direct Commands** - Run specific functionality directly
+
+## 🛠️ Available Features
+
+### Go Version Features
+- Development tools (GitHub CLI, OpenCode, Gemini CLI, CLOC, Node.js, Zoxide, Google Cloud CLI)
+- System configuration (timezone, aliases)
+- Repository management (clone favorites, browse repos)
+- SSH connection helpers
+
+### Shell Version Features  
+- Chrome Remote Desktop installation
+- Google Chrome and VS Code installation
+- xRDP setup
+- Multi-distro package manager support
 
 ### Alternative: Direct Script Execution
 
@@ -120,17 +164,25 @@ If you encounter any issues:
 4. Remember Chrome remote desktop works with non root user only
 5. If you want to install remote desktop on root use then use RDP.
 
-## Available Scripts
+## 📁 Project Structure
 
-- **`run.sh`**: Interactive menu interface (recommended)
-- **`chrome_remote_desktop.sh`**: Auto-detection and installation script (formerly main.sh)
-- **`apt.sh`**: Installation for Debian/Ubuntu systems
-- **`dnf.sh`**: Installation for Red Hat/Fedora systems  
-- **`pacman.sh`**: Installation for Arch Linux systems
-- **`zypper.sh`**: Installation for openSUSE systems
-- **`chrome.sh`**: Google Chrome Browser installation
-- **`vscode.sh`**: Visual Studio Code installation
-- **`xrdp/setup_rdp.sh`**: xRDP setup for Microsoft RDP access
+```
+chrome_remote_desktop_and_xrdp/
+├── run.sh                      # Main launcher with version selection
+├── go/                         # Go implementation (recommended)
+│   ├── chrome-remote-desktop-installer  # Binary executable
+│   ├── cmd/                    # CLI commands
+│   ├── internal/               # Application logic
+│   └── pkg/                    # Shared packages
+├── shell/                      # Shell script implementation (legacy)  
+│   ├── run.sh                  # Shell version menu
+│   ├── chrome_remote_desktop.sh # Auto-detection script
+│   ├── apt.sh, dnf.sh, etc.    # Package manager scripts
+│   ├── chrome.sh, vscode.sh    # Additional tools
+│   └── sample_config.json      # Configuration example
+└── xrdp/
+    └── setup_rdp.sh            # xRDP setup
+```
 
 ### Examples Folder
 

@@ -13,6 +13,8 @@ import (
 type MenuItem struct {
 	ID          int
 	Description string
+	Command     string
+	Comment     string
 	Action      func() error
 }
 
@@ -28,10 +30,12 @@ func NewMenu(title string) *Menu {
 	}
 }
 
-func (m *Menu) AddItem(id int, description string, action func() error) {
+func (m *Menu) AddItem(id int, description string, command string, comment string, action func() error) {
 	m.items = append(m.items, MenuItem{
 		ID:          id,
 		Description: description,
+		Command:     command,
+		Comment:     comment,
 		Action:      action,
 	})
 }
@@ -82,23 +86,33 @@ func (m *Menu) clear() {
 }
 
 func (m *Menu) drawBox() {
-	fmt.Println()
-	m.drawBoxLine(m.title)
-	fmt.Println()
+	fmt.Println(m.title)
+	fmt.Println("")
 
-	fmt.Printf("%s\n\n", color.WhiteString("Choose an option:"))
+	// Group menu items by category
+	m.printSection("=== Development Tools Installation ===", 1, 9)
+	fmt.Println("")
+	m.printSection("=== System Configuration ===", 10, 11)
+	fmt.Println("")
+	m.printSection("=== Repository Management ===", 12, 14)
+	fmt.Println("")
+	m.printSection("=== SSH Connection Commands ===", 15, 17)
+	fmt.Println("")
 
+	fmt.Printf("%s\n", color.RedString("0.  Exit"))
+}
+
+func (m *Menu) printSection(title string, startID, endID int) {
+	fmt.Println(title)
 	for _, item := range m.items {
-		fmt.Printf("%s %s\n",
-			color.GreenString("%d)", item.ID),
-			color.WhiteString(item.Description))
+		if item.ID >= startID && item.ID <= endID {
+			fmt.Printf("%-2d. %-30s %s # %s\n",
+				item.ID,
+				item.Description,
+				color.CyanString(item.Command),
+				color.GreenString(item.Comment))
+		}
 	}
-
-	fmt.Printf("%s %s\n",
-		color.RedString("0)"),
-		color.WhiteString("Exit"))
-
-	fmt.Printf("\n%s", color.YellowString("Enter your choice: "))
 }
 
 func (m *Menu) drawBoxLine(text string) {
