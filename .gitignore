@@ -11,5 +11,13 @@ setup_file_versioning.sh
 file_versioning.sh
 check_versioning.sh
 
+# Ignore Go binaries
+go-tools/chrome-remote-desktop
+go-tools/install-chrome
+go-tools/install-vscode
+go-tools/setup-xrdp
+go-tools/go.mod
+go-tools/go.sum
+
 # Other ignored files
 config.json

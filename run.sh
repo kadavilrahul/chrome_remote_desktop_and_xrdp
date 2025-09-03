@@ -37,104 +37,90 @@ check_root() {
     fi
 }
 
-# Function to build Go binary if needed
-ensure_go_binary() {
-    if [ ! -f "go/chrome-remote-desktop-installer" ]; then
-        printf "${BLUE}Building Go binary...${NC}\n"
-        cd go
-        if ! go build -o chrome-remote-desktop-installer .; then
-            printf "${RED}Failed to build Go binary. Make sure Go is installed.${NC}\n"
+# Function to build Go binaries if needed
+ensure_go_binaries() {
+    if [ ! -f "go-tools/chrome-remote-desktop" ]; then
+        printf "${BLUE}Building Go binaries...${NC}\n"
+        cd go-tools
+        if ! bash build-all.sh; then
+            printf "${RED}Failed to build Go binaries. Make sure Go is installed.${NC}\n"
             cd ..
             return 1
         fi
         cd ..
-        printf "${GREEN}✓ Go binary built successfully!${NC}\n"
+        printf "${GREEN}✓ Go binaries built successfully!${NC}\n"
     fi
     return 0
 }
 
-# Function to display version selection menu
-show_version_menu() {
+# Function to display main menu
+show_menu() {
     clear
     echo
-    draw_box "Server Setup Tools - Version Selection"
+    draw_box "Server Setup Tools - Main Menu"
     echo
-    printf "${WHITE}Choose implementation version:${NC}\n\n"
+    printf "${WHITE}Choose an option:${NC}\n\n"
     
-    printf "${GREEN}1)${NC} ${WHITE}Go Version (Recommended)${NC}\n"
-    printf "   ${CYAN}• Modern, fast, and feature-rich${NC}\n"
-    printf "   ${CYAN}• Single binary with no dependencies${NC}\n"
-    printf "   ${CYAN}• Better error handling and UX${NC}\n"
-    printf "   ${CYAN}• Comprehensive development tools${NC}\n\n"
-    
-    printf "${YELLOW}2)${NC} ${WHITE}Shell Script Version (Legacy)${NC}\n"
-    printf "   ${CYAN}• Original Chrome Remote Desktop installer${NC}\n"
-    printf "   ${CYAN}• Simple and lightweight${NC}\n"
-    printf "   ${CYAN}• Compatible with minimal systems${NC}\n\n"
-    
-    printf "${BLUE}3)${NC} ${WHITE}Direct Commands${NC}\n"
-    printf "   ${CYAN}• Run specific functionality directly${NC}\n\n"
-    
-    printf "${RED}0)${NC} ${WHITE}Exit${NC}\n"
+    printf "${GREEN}=== Installation Tools ===${NC}\n"
+    printf "${CYAN}1.${NC}  Auto-detect and install Chrome Remote Desktop    ${YELLOW}./run.sh chrome-remote-desktop${NC}    ${GREEN}# Multi-distro installer${NC}\n"
+    printf "${CYAN}2.${NC}  Install Google Chrome Browser                     ${YELLOW}./run.sh install-chrome${NC}          ${GREEN}# Web browser${NC}\n"
+    printf "${CYAN}3.${NC}  Install Visual Studio Code                        ${YELLOW}./run.sh install-vscode${NC}          ${GREEN}# Code editor${NC}\n"
+    printf "${CYAN}4.${NC}  Setup xRDP for Microsoft RDP                      ${YELLOW}./run.sh setup-xrdp${NC}              ${GREEN}# Remote desktop protocol${NC}\n"
     echo
-    printf "${YELLOW}Enter your choice [1-3,0]: ${NC}"
+    printf "${GREEN}=== Utilities ===${NC}\n"
+    printf "${CYAN}5.${NC}  Build Go Tools                                     ${YELLOW}./run.sh build${NC}                   ${GREEN}# Compile binaries${NC}\n"
+    printf "${CYAN}6.${NC}  Show All Commands                                  ${YELLOW}./run.sh help${NC}                    ${GREEN}# Command reference${NC}\n"
+    echo
+    printf "${RED}0.${NC}  Exit\n"
+    echo
+    printf "${YELLOW}Enter your choice [1-6,0]: ${NC}"
 }
 
-# Function to show direct command options
-show_direct_commands() {
+# Function to run command with error handling
+run_command() {
+    local cmd="$1"
+    local description="$2"
+    
+    printf "${BLUE}Running: $description${NC}\n"
+    echo "========================================"
+    
+    if eval "$cmd"; then
+        printf "\n${GREEN}✓ $description completed successfully!${NC}\n"
+    else
+        printf "\n${RED}✗ Error running $description${NC}\n"
+        read -p "Press Enter to continue..."
+    fi
+}
+
+# Function to show all commands
+show_all_commands() {
     clear
     echo
-    draw_box "Direct Command Options"
+    draw_box "All Available Commands"
     echo
-    printf "${WHITE}Available direct commands:${NC}\n\n"
+    printf "${WHITE}Direct CLI Commands:${NC}\n\n"
     
-    printf "${GREEN}Go Version Commands:${NC}\n"
-    printf "  ${CYAN}sudo go/chrome-remote-desktop-installer${NC}                    # Interactive menu\n"
-    printf "  ${CYAN}sudo go/chrome-remote-desktop-installer --auto${NC}             # Auto Chrome RDP\n"
-    printf "  ${CYAN}sudo go/chrome-remote-desktop-installer --chrome${NC}           # Install Chrome\n"
-    printf "  ${CYAN}sudo go/chrome-remote-desktop-installer --vscode${NC}           # Install VS Code\n"
-    printf "  ${CYAN}sudo go/chrome-remote-desktop-installer --help${NC}             # Show help\n\n"
+    printf "${GREEN}Chrome Remote Desktop Tools:${NC}\n"
+    printf "  ${CYAN}sudo ./run.sh chrome-remote-desktop${NC}    # Auto-detect and install Chrome Remote Desktop\n"
+    printf "  ${CYAN}sudo ./run.sh install-chrome${NC}           # Install Google Chrome Browser\n"
+    printf "  ${CYAN}sudo ./run.sh install-vscode${NC}           # Install Visual Studio Code\n"
+    printf "  ${CYAN}sudo ./run.sh setup-xrdp${NC}               # Setup xRDP for Microsoft RDP\n\n"
     
-    printf "${YELLOW}Shell Version Commands:${NC}\n"
-    printf "  ${CYAN}sudo shell/run.sh${NC}                                          # Interactive menu\n"
-    printf "  ${CYAN}sudo shell/chrome_remote_desktop.sh${NC}                        # Auto-detect install\n"
-    printf "  ${CYAN}sudo shell/apt.sh${NC}                                          # Debian/Ubuntu\n"
-    printf "  ${CYAN}sudo shell/dnf.sh${NC}                                          # Red Hat/Fedora\n"
-    printf "  ${CYAN}sudo shell/pacman.sh${NC}                                       # Arch Linux\n"
-    printf "  ${CYAN}sudo shell/zypper.sh${NC}                                       # openSUSE\n"
-    printf "  ${CYAN}sudo shell/chrome.sh${NC}                                       # Install Chrome\n"
-    printf "  ${CYAN}sudo shell/vscode.sh${NC}                                       # Install VS Code\n\n"
+    printf "${YELLOW}Direct Shell Script Commands (Advanced):${NC}\n"
+    printf "  ${CYAN}sudo bash shell/chrome_remote_desktop.sh${NC} # Auto-detect installer\n"
+    printf "  ${CYAN}sudo bash shell/apt.sh${NC}                  # Debian/Ubuntu installer\n"
+    printf "  ${CYAN}sudo bash shell/dnf.sh${NC}                  # Red Hat/Fedora installer\n"
+    printf "  ${CYAN}sudo bash shell/pacman.sh${NC}               # Arch Linux installer\n"
+    printf "  ${CYAN}sudo bash shell/zypper.sh${NC}               # openSUSE installer\n"
+    printf "  ${CYAN}sudo bash shell/chrome.sh${NC}               # Install Google Chrome\n"
+    printf "  ${CYAN}sudo bash shell/vscode.sh${NC}               # Install Visual Studio Code\n"
+    printf "  ${CYAN}sudo bash shell/setup_rdp.sh${NC}            # Setup xRDP\n\n"
     
-    printf "${PURPLE}Other:${NC}\n"
-    printf "  ${CYAN}sudo xrdp/setup_rdp.sh${NC}                                     # Setup xRDP\n\n"
+    printf "${BLUE}Build & Utility:${NC}\n"
+    printf "  ${CYAN}./run.sh build${NC}                          # Build Go tools\n"
+    printf "  ${CYAN}./run.sh help${NC}                           # Show this help\n\n"
     
     read -p "Press Enter to return to main menu..."
-}
-
-# Function to run Go version
-run_go_version() {
-    if ! ensure_go_binary; then
-        printf "${RED}Cannot run Go version. Build failed.${NC}\n"
-        read -p "Press Enter to continue..."
-        return 1
-    fi
-    
-    printf "${BLUE}Starting Go version...${NC}\n"
-    echo "========================================"
-    ./go/chrome-remote-desktop-installer
-}
-
-# Function to run Shell version
-run_shell_version() {
-    if [ ! -f "shell/run.sh" ]; then
-        printf "${RED}Shell version not found at shell/run.sh${NC}\n"
-        read -p "Press Enter to continue..."
-        return 1
-    fi
-    
-    printf "${BLUE}Starting Shell version...${NC}\n"
-    echo "========================================"
-    bash shell/run.sh
 }
 
 # Main program loop
@@ -142,18 +128,31 @@ main() {
     check_root
     
     while true; do
-        show_version_menu
+        show_menu
         read -r choice
         
         case $choice in
             1)
-                run_go_version
+                ensure_go_binaries
+                run_command "./go-tools/chrome-remote-desktop" "Chrome Remote Desktop Installation"
                 ;;
             2)
-                run_shell_version
+                ensure_go_binaries
+                run_command "./go-tools/install-chrome" "Google Chrome Installation"
                 ;;
             3)
-                show_direct_commands
+                ensure_go_binaries
+                run_command "./go-tools/install-vscode" "Visual Studio Code Installation"
+                ;;
+            4)
+                ensure_go_binaries
+                run_command "./go-tools/setup-xrdp" "xRDP Setup"
+                ;;
+            5)
+                run_command "cd go-tools && bash build-all.sh" "Building Go Tools"
+                ;;
+            6)
+                show_all_commands
                 ;;
             0)
                 echo
@@ -161,14 +160,14 @@ main() {
                 exit 0
                 ;;
             *)
-                printf "${RED}Invalid option. Please choose 1-3 or 0.${NC}\n"
+                printf "${RED}Invalid option. Please choose 1-6 or 0.${NC}\n"
                 read -p "Press Enter to continue..."
                 ;;
         esac
         
-        if [ "$choice" != "0" ] && [ "$choice" != "3" ]; then
+        if [ "$choice" != "0" ] && [ "$choice" != "6" ]; then
             echo
-            read -p "Press Enter to return to version selection..."
+            read -p "Press Enter to return to main menu..."
         fi
     done
 }
@@ -176,38 +175,55 @@ main() {
 # Handle direct command line arguments
 if [ $# -gt 0 ]; then
     case $1 in
-        "go")
+        "chrome-remote-desktop")
             check_root
-            run_go_version
+            ensure_go_binaries
+            ./go-tools/chrome-remote-desktop
             exit $?
             ;;
-        "shell")
+        "install-chrome")
             check_root
-            run_shell_version
+            ensure_go_binaries
+            ./go-tools/install-chrome
             exit $?
             ;;
+        "install-vscode")
+            check_root
+            ensure_go_binaries
+            ./go-tools/install-vscode
+            exit $?
+            ;;
+        "setup-xrdp")
+            check_root
+            ensure_go_binaries
+            ./go-tools/setup-xrdp
+            exit $?
+            ;;
+
         "build")
-            printf "${BLUE}Building Go binary...${NC}\n"
-            cd go && go build -o chrome-remote-desktop-installer .
+            printf "${BLUE}Building Go tools...${NC}\n"
+            cd go-tools && bash build-all.sh
             exit $?
             ;;
-        "--help"|"-h")
+        "help"|"--help"|"-h")
             echo "Server Setup Tools"
             echo ""
             echo "Usage: $0 [COMMAND]"
             echo ""
             echo "Commands:"
-            echo "  go        Run Go version directly"
-            echo "  shell     Run Shell version directly"
-            echo "  build     Build Go binary"
-            echo "  --help    Show this help"
+            echo "  chrome-remote-desktop    Auto-detect and install Chrome Remote Desktop"
+            echo "  install-chrome           Install Google Chrome Browser"
+            echo "  install-vscode           Install Visual Studio Code"
+            echo "  setup-xrdp               Setup xRDP for Microsoft RDP"
+            echo "  build                    Build Go tools"
+            echo "  help                     Show all available commands"
             echo ""
-            echo "Without arguments, shows interactive version selection menu"
+            echo "Without arguments, shows interactive main menu"
             exit 0
             ;;
         *)
             printf "${RED}Unknown command: $1${NC}\n"
-            printf "Run '$0 --help' for usage information\n"
+            printf "Run '$0 help' for usage information\n"
             exit 1
             ;;
     esac

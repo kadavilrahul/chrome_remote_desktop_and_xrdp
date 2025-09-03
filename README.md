@@ -4,34 +4,22 @@ This repository contains automated installers for server setup and Chrome Remote
 
 ## 🚀 Quick Start
 
-### Interactive Version Selection (Recommended)
+### Interactive Main Menu (Recommended)
 ```bash
 sudo ./run.sh
 ```
 
 ### Direct Commands
 ```bash
-# Run Go version directly
-sudo ./run.sh go
+# Chrome Remote Desktop Tools
+sudo ./run.sh chrome-remote-desktop    # Auto-detect and install Chrome Remote Desktop
+sudo ./run.sh install-chrome           # Install Google Chrome Browser
+sudo ./run.sh install-vscode           # Install Visual Studio Code  
+sudo ./run.sh setup-xrdp               # Setup xRDP for Microsoft RDP
 
-# Run Shell version directly
-sudo ./run.sh shell
-
-# Build Go binary
-./run.sh build
-
-# Show help
-./run.sh --help
-```
-
-### Manual Execution
-```bash
-# Go version
-cd go/ && make build
-sudo ./build/chrome-remote-desktop-installer
-
-# Shell version
-sudo bash shell/run.sh
+# Utilities
+./run.sh build                         # Build Go tools
+./run.sh help                          # Show all available commands
 ```
 
 ## Supported Distributions
@@ -168,20 +156,21 @@ If you encounter any issues:
 
 ```
 chrome_remote_desktop_and_xrdp/
-├── run.sh                      # Main launcher with version selection
-├── go/                         # Go implementation (recommended)
-│   ├── chrome-remote-desktop-installer  # Binary executable
-│   ├── cmd/                    # CLI commands
-│   ├── internal/               # Application logic
-│   └── pkg/                    # Shared packages
-├── shell/                      # Shell script implementation (legacy)  
-│   ├── run.sh                  # Shell version menu
-│   ├── chrome_remote_desktop.sh # Auto-detection script
-│   ├── apt.sh, dnf.sh, etc.    # Package manager scripts
-│   ├── chrome.sh, vscode.sh    # Additional tools
-│   └── sample_config.json      # Configuration example
-└── xrdp/
-    └── setup_rdp.sh            # xRDP setup
+├── run.sh                      # Main launcher with unified menu
+├── go-tools/                   # Go implementations (recommended)
+│   ├── chrome-remote-desktop   # Auto-detect installer binary
+│   ├── install-chrome          # Chrome installer binary
+│   ├── install-vscode          # VS Code installer binary  
+│   ├── setup-xrdp              # xRDP setup binary
+│   ├── *.go                    # Source files
+│   └── build-all.sh            # Build script
+└── shell/                      # Shell script implementations
+    ├── run.sh                  # Shell version menu
+    ├── chrome_remote_desktop.sh # Auto-detection script
+    ├── apt.sh, dnf.sh, etc.    # Package manager scripts
+    ├── chrome.sh, vscode.sh    # Additional tools
+    ├── setup_rdp.sh            # xRDP setup (moved from xrdp/)
+    └── sample_config.json      # Configuration example
 ```
 
 ### Examples Folder
