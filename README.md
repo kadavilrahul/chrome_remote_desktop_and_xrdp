@@ -5,17 +5,17 @@ Automated installer for Chrome Remote Desktop and development tools across Linux
 ## 🚀 Quick Start
 
 ### Clone Repository
+
 ```bash
-git clone https://github.com/yourusername/chrome_remote_desktop_and_xrdp.git
+git clone https://github.com/kadavilrahul/chrome_remote_desktop_and_xrdp.git
 ```
 
 ```bash
 cd chrome_remote_desktop_and_xrdp
 ```
 
-### Run Interactive Menu
 ```bash
-sudo ./run.sh
+bash run.sh
 ```
 
 
