@@ -38,27 +38,27 @@ show_menu() {
     echo
 
     echo "=== GO VERSION (Recommended) ==="
-    echo "Auto-detect Chrome Remote Desktop        ./go/chrome-remote-desktop           # Installs: Chrome Remote Desktop + XFCE + LightDM + Firefox + user account (auto-builds if needed)"
-    echo "Install Google Chrome                    ./go/install-chrome                  # Installs: Google Chrome browser for your distribution (auto-builds if needed)"
-    echo "Install Visual Studio Code               ./go/install-vscode                  # Installs: VS Code editor with official Microsoft repository (auto-builds if needed)"
-    echo "Setup xRDP                              ./go/setup-xrdp                      # Installs: xRDP + XFCE + Firefox + VS Code + performance optimizations (auto-builds if needed)"
+    echo "1. Install Go                               ./go/install_go.sh                   # Installs: Go programming language and toolchain"
+    echo "2. Build Go tools                           ./go/build-all.sh                    # Compiles: All Go binaries (chrome-remote-desktop, install-chrome, etc.)"
+    echo "3. Auto-detect Chrome Remote Desktop        ./go/chrome-remote-desktop           # Debian/Ubuntu: Chrome RD + XFCE + LightDM + Firefox + user account (auto-builds if needed)"
+    echo "4. Install Google Chrome                    ./go/install-chrome                  # Installs: Google Chrome browser for your distribution (auto-builds if needed)"
+    echo "5. Install Visual Studio Code               ./go/install-vscode                  # Installs: VS Code editor with official Microsoft repository (auto-builds if needed)"
+    echo "6. Setup xRDP                               ./go/setup-xrdp                      #  UNIVERSAL: xRDP + XFCE + Firefox + VS Code + optimizations (works on ALL distros)"
     echo
     echo "=== SHELL VERSION (Legacy) ==="
-    echo "Auto-detect Chrome Remote Desktop        ./shell/chrome_remote_desktop.sh     # Installs: Chrome Remote Desktop + XFCE + LightDM + Firefox + user account"
-    echo "Install Google Chrome                    ./shell/chrome.sh                    # Installs: Google Chrome browser (supports apt/dnf/pacman/zypper)"
-    echo "Install Visual Studio Code               ./shell/vscode.sh                    # Installs: VS Code editor (supports apt/dnf/pacman/zypper)"
-    echo "Setup xRDP                              ./shell/setup_rdp.sh                 # Installs: xRDP + XFCE + Firefox + VS Code + system optimizations"
-    echo "Build Go tools                          ./go/build-all.sh                    # Compiles: All Go binaries (chrome-remote-desktop, install-chrome, etc.)"
+    echo "7. Auto-detect Chrome Remote Desktop        ./shell/chrome_remote_desktop.sh     # Debian/Ubuntu: Chrome RD + XFCE + LightDM + Firefox + user account"
+    echo "8. Install Google Chrome                    ./shell/chrome.sh                    # Installs: Google Chrome browser (supports all package managers)"
+    echo "9. Install Visual Studio Code               ./shell/vscode.sh                    # Installs: VS Code editor (supports all package managers)"
+    echo "10. Setup xRDP                              ./shell/setup_rdp.sh                 # UNIVERSAL: xRDP + XFCE + Firefox + VS Code + optimizations (works on ALL distros)"
     echo
     echo "=== MAINTENANCE TOOLS ==="
-    echo "Update all tools                        ./update.sh                          # Updates: All installed tools + system packages + Go binaries"
-    echo "Uninstall all tools                      ./uninstall_tools.sh                 # Removes: All tools (Chrome, VS Code, xRDP, XFCE, Firefox, LightDM)"
-    echo "Uninstall Chrome Remote Desktop          ./uninstall_chrome_remote_desktop.sh # Removes: Chrome Remote Desktop + user account + config files"
-    echo "Install Go                              ./go/install_go.sh                   # Installs: Go programming language and toolchain"
+    echo "11. Update all tools                        ./update.sh                          # Updates: All installed tools + system packages + Go binaries"
+    echo "12. Uninstall all tools                     ./uninstall_tools.sh                 # Removes: All tools (Chrome, VS Code, xRDP, XFCE, Firefox, LightDM)"
+    echo "13. Uninstall Chrome Remote Desktop         ./uninstall_chrome_remote_desktop.sh # Removes: Chrome Remote Desktop + user account + config files"
     echo
-    echo "Exit"
+    echo "0. Exit"
     echo
-    printf "Type the tool name or command: "
+    printf "Enter your choice (1-13 or 0 to exit): "
 }
 
 # Function to run Go scripts with error handling
@@ -146,21 +146,21 @@ show_help() {
     echo "  ./run.sh help              # Show this help"
     echo
     echo "INSTALLATION OPTIONS:"
-    echo "  1, chrome-remote-desktop   Auto-detect and install Chrome Remote Desktop (Go - auto-builds if needed)"
-    echo "  2, install-chrome          Install Google Chrome Browser (Go - auto-builds if needed)"
-    echo "  3, install-vscode          Install Visual Studio Code (Go - auto-builds if needed)"
-    echo "  4, setup-xrdp              Setup xRDP (Go - auto-builds if needed)"
-    echo "  5, chrome-remote-desktop-shell  Auto-detect Chrome Remote Desktop (Shell)"
-    echo "  6, chrome-shell            Install Google Chrome (Shell)"
-    echo "  7, vscode-shell            Install Visual Studio Code (Shell)"
-    echo "  8, rdp-shell               Setup xRDP (Shell)"
-    echo "  9, build-go                Build Go tools"
+    echo "  1, install-go              Install Go programming language"
+    echo "  2, build-go                Build Go tools"
+    echo "  3, chrome-remote-desktop   Auto-detect and install Chrome Remote Desktop (Go - auto-builds if needed)"
+    echo "  4, install-chrome          Install Google Chrome Browser (Go - auto-builds if needed)"
+    echo "  5, install-vscode          Install Visual Studio Code (Go - auto-builds if needed)"
+    echo "  6, setup-xrdp              Setup xRDP (Go - auto-builds if needed)"
+    echo "  7, chrome-remote-desktop-shell  Auto-detect Chrome Remote Desktop (Shell)"
+    echo "  8, chrome-shell            Install Google Chrome (Shell)"
+    echo "  9, vscode-shell            Install Visual Studio Code (Shell)"
+    echo "  10, rdp-shell              Setup xRDP (Shell)"
     echo
     echo "MAINTENANCE OPTIONS:"
-    echo "  10, update                 Update all tools and system"
-    echo "  11, uninstall-tools        Uninstall all tools"
-    echo "  12, uninstall              Uninstall Chrome Remote Desktop and user"
-    echo "  13, install-go             Install Go programming language"
+    echo "  11, update                 Update all tools and system"
+    echo "  12, uninstall-tools        Uninstall all tools"
+    echo "  13, uninstall              Uninstall Chrome Remote Desktop and user"
     echo
     echo "EXAMPLES:"
     echo "  sudo ./run.sh 1                    # Install Chrome Remote Desktop"
@@ -177,44 +177,44 @@ main() {
     # Check for command-line arguments
     if [[ $# -gt 0 ]]; then
         case "$1" in
-            1|chrome-remote-desktop)
-                run_go_script "./go/chrome-remote-desktop" "Auto-detect and install Chrome Remote Desktop (Go)"
+            1|install-go)
+                run_shell_script "./go/install_go.sh" "Install Go programming language"
                 ;;
-            2|install-chrome)
-                run_go_script "./go/install-chrome" "Google Chrome Browser installation (Go)"
-                ;;
-            3|install-vscode)
-                run_go_script "./go/install-vscode" "Visual Studio Code installation (Go)"
-                ;;
-            4|setup-xrdp)
-                run_go_script "./go/setup-xrdp" "xRDP setup (Go)"
-                ;;
-            5|chrome-remote-desktop-shell)
-                run_shell_script "./shell/chrome_remote_desktop.sh" "Auto-detect and install Chrome Remote Desktop (Shell)"
-                ;;
-            6|chrome-shell)
-                run_shell_script "./shell/chrome.sh" "Google Chrome Browser installation (Shell)"
-                ;;
-            7|vscode-shell)
-                run_shell_script "./shell/vscode.sh" "Visual Studio Code installation (Shell)"
-                ;;
-            8|rdp-shell)
-                run_shell_script "./shell/setup_rdp.sh" "xRDP setup (Shell)"
-                ;;
-            9|build-go)
+            2|build-go)
                 run_go_script "./go/build-all.sh" "Build Go tools"
                 ;;
-            10|update)
+            3|chrome-remote-desktop)
+                run_go_script "./go/chrome-remote-desktop" "Auto-detect and install Chrome Remote Desktop (Go)"
+                ;;
+            4|install-chrome)
+                run_go_script "./go/install-chrome" "Google Chrome Browser installation (Go)"
+                ;;
+            5|install-vscode)
+                run_go_script "./go/install-vscode" "Visual Studio Code installation (Go)"
+                ;;
+            6|setup-xrdp)
+                run_go_script "./go/setup-xrdp" "xRDP setup (Go)"
+                ;;
+            7|chrome-remote-desktop-shell)
+                run_shell_script "./shell/chrome_remote_desktop.sh" "Auto-detect and install Chrome Remote Desktop (Shell)"
+                ;;
+            8|chrome-shell)
+                run_shell_script "./shell/chrome.sh" "Google Chrome Browser installation (Shell)"
+                ;;
+            9|vscode-shell)
+                run_shell_script "./shell/vscode.sh" "Visual Studio Code installation (Shell)"
+                ;;
+            10|rdp-shell)
+                run_shell_script "./shell/setup_rdp.sh" "xRDP setup (Shell)"
+                ;;
+            11|update)
                 run_shell_script "./update.sh" "Update all tools and system"
                 ;;
-            11|uninstall-tools)
+            12|uninstall-tools)
                 run_shell_script "./uninstall_tools.sh" "Uninstall all tools"
                 ;;
-            12|uninstall)
-                run_shell_script "./uninstall.sh" "Uninstall Chrome Remote Desktop and user"
-                ;;
-            13|install-go)
-                run_shell_script "./go/install_go.sh" "Install Go programming language"
+            13|uninstall)
+                run_shell_script "./uninstall_chrome_remote_desktop.sh" "Uninstall Chrome Remote Desktop and user"
                 ;;
             help|--help|-h)
                 show_help
@@ -236,43 +236,43 @@ main() {
 
         case $choice in
             1)
-                run_go_script "./go/chrome-remote-desktop" "Auto-detect and install Chrome Remote Desktop (Go)"
+                run_shell_script "./go/install_go.sh" "Install Go programming language"
                 ;;
             2)
-                run_go_script "./go/install-chrome" "Google Chrome Browser installation (Go)"
-                ;;
-            3)
-                run_go_script "./go/install-vscode" "Visual Studio Code installation (Go)"
-                ;;
-            4)
-                run_go_script "./go/setup-xrdp" "xRDP setup (Go)"
-                ;;
-            5)
-                run_shell_script "./shell/chrome_remote_desktop.sh" "Auto-detect and install Chrome Remote Desktop (Shell)"
-                ;;
-            6)
-                run_shell_script "./shell/chrome.sh" "Google Chrome Browser installation (Shell)"
-                ;;
-            7)
-                run_shell_script "./shell/vscode.sh" "Visual Studio Code installation (Shell)"
-                ;;
-            8)
-                run_shell_script "./shell/setup_rdp.sh" "xRDP setup (Shell)"
-                ;;
-            9)
                 run_go_script "./go/build-all.sh" "Build Go tools"
                 ;;
+            3)
+                run_go_script "./go/chrome-remote-desktop" "Auto-detect and install Chrome Remote Desktop (Go)"
+                ;;
+            4)
+                run_go_script "./go/install-chrome" "Google Chrome Browser installation (Go)"
+                ;;
+            5)
+                run_go_script "./go/install-vscode" "Visual Studio Code installation (Go)"
+                ;;
+            6)
+                run_go_script "./go/setup-xrdp" "xRDP setup (Go)"
+                ;;
+            7)
+                run_shell_script "./shell/chrome_remote_desktop.sh" "Auto-detect and install Chrome Remote Desktop (Shell)"
+                ;;
+            8)
+                run_shell_script "./shell/chrome.sh" "Google Chrome Browser installation (Shell)"
+                ;;
+            9)
+                run_shell_script "./shell/vscode.sh" "Visual Studio Code installation (Shell)"
+                ;;
             10)
-                run_script "./update.sh" "Update all tools"
+                run_shell_script "./shell/setup_rdp.sh" "xRDP setup (Shell)"
                 ;;
             11)
-                run_script "./uninstall_tools.sh" "Uninstall all tools"
+                run_shell_script "./update.sh" "Update all tools and system"
                 ;;
             12)
-                run_script "./uninstall_chrome_remote_desktop.sh" "Uninstall Chrome Remote Desktop"
+                run_shell_script "./uninstall_tools.sh" "Uninstall all tools"
                 ;;
             13)
-                run_script "./go/install_go.sh" "Install Go programming language"
+                run_shell_script "./uninstall_chrome_remote_desktop.sh" "Uninstall Chrome Remote Desktop and user"
                 ;;
             0)
                 echo
@@ -281,24 +281,6 @@ main() {
                 ;;
             *)
                 printf "${RED}Invalid option. Please choose 1-13 or 0.${NC}\n"
-                read -p "Press Enter to continue..."
-                ;;
-            10)
-                run_shell_script "./update.sh" "Update all tools and system"
-                ;;
-            11)
-                run_shell_script "./uninstall_tools.sh" "Uninstall all tools"
-                ;;
-            12)
-                run_shell_script "./uninstall.sh" "Uninstall Chrome Remote Desktop and user"
-                ;;
-            0)
-                echo
-                printf "${GREEN}Thank you for using Chrome Remote Desktop Setup!${NC}\n"
-                exit 0
-                ;;
-            *)
-                printf "${RED}Invalid option. Please choose 0-12.${NC}\n"
                 read -p "Press Enter to continue..."
                 ;;
         esac

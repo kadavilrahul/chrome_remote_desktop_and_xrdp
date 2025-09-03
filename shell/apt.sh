@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Chrome Remote Desktop Installation for Debian/Ubuntu
+echo "✅ Debian/Ubuntu detected - This is officially supported by Google Chrome Remote Desktop"
+echo ""
+
 # Update and upgrade the system
 sudo apt update
 sudo apt upgrade -y

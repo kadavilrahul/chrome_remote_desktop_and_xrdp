@@ -13,14 +13,10 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 detect_package_manager() {
     if command -v apt &> /dev/null; then
         echo "apt"
-    elif command -v dnf &> /dev/null; then
-        echo "dnf"
-    elif command -v pacman &> /dev/null; then
-        echo "pacman"
-    elif command -v zypper &> /dev/null; then
-        echo "zypper"
+    elif command -v aptitude &> /dev/null; then
+        echo "aptitude"
     else
-        echo "unknown"
+        echo "unsupported"
     fi
 }
 
@@ -45,27 +41,23 @@ echo "Detected package manager: $PACKAGE_MANAGER"
 case $PACKAGE_MANAGER in
     "apt")
         echo "Installing for Debian/Ubuntu based system..."
+        echo "✅ This is officially supported by Google Chrome Remote Desktop"
         bash "$SCRIPT_DIR/apt.sh"
         ;;
-    "dnf")
-        echo "Installing for Red Hat/Fedora based system..."
-        bash "$SCRIPT_DIR/dnf.sh"
-        ;;
-    "pacman")
-        echo "Installing for Arch Linux based system..."
-        bash "$SCRIPT_DIR/pacman.sh"
-        ;;
-    "zypper")
-        echo "Installing for openSUSE based system..."
-        bash "$SCRIPT_DIR/zypper.sh"
+    "aptitude")
+        echo "Installing for Debian/Ubuntu based system (aptitude)..."
+        echo "✅ This is officially supported by Google Chrome Remote Desktop"
+        bash "$SCRIPT_DIR/apt.sh"
         ;;
     *)
-        echo "Error: Unsupported package manager or Linux distribution"
-        echo "This script supports the following distributions:"
-        echo "- Debian/Ubuntu (apt)"
-        echo "- Red Hat/Fedora (dnf)"
-        echo "- Arch Linux (pacman)"
-        echo "- openSUSE (zypper)"
+        echo "❌ Error: Chrome Remote Desktop is only officially supported on Debian/Ubuntu"
+        echo ""
+        echo "🚨 Google Chrome Remote Desktop only works on Debian-based systems!"
+        echo ""
+        echo "For your distribution, please use xRDP instead:"
+        echo "  sudo ./run.sh (then select: Setup xRDP)"
+        echo ""
+        echo "xRDP works on ALL Linux distributions and provides Microsoft RDP support."
         exit 1
         ;;
 esac
