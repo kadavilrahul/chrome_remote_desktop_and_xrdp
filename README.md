@@ -130,4 +130,3 @@ When prompted add new user and password for Linux
 - For universal RDP: Use xRDP on any Linux distribution
 - Test on supported distributions before reporting issues
 
-This is a test line
