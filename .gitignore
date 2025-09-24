@@ -19,6 +19,10 @@ go-tools/setup-xrdp
 go-tools/go.mod
 go-tools/go.sum
 
+# Ignore root Go module files
+go.mod
+go.sum
+
 # Other ignored files
 config.json
 

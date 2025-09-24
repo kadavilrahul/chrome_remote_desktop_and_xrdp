@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Change to the script's directory
+cd "$(dirname "$0")"
+
 echo "Building Go tools..."
 
 # Check if Go is installed, install if missing
