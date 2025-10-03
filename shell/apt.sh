@@ -23,13 +23,21 @@ sudo apt install -y lightdm
 # Configure Chrome Remote Desktop to use XFCE
 echo "exec /etc/X11/Xsession /usr/bin/xfce4-session" | sudo tee /etc/chrome-remote-desktop-session
 
-# Read user details from config.json
-if [ -f "config.json" ]; then
-    NEW_USER=$(python3 -c "import json; print(json.load(open('config.json'))['user']['username'])")
-    USER_PASSWORD=$(python3 -c "import json; print(json.load(open('config.json'))['user']['password'])")
+# Get absolute path to script directory
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+CONFIG_FILE="$SCRIPT_DIR/config.json"
+
+# Read user details from config.json or environment variables
+if [ -n "$CONFIG_USERNAME" ] && [ -n "$CONFIG_PASSWORD" ]; then
+    NEW_USER="$CONFIG_USERNAME"
+    USER_PASSWORD="$CONFIG_PASSWORD"
+    echo "Using username from environment: $NEW_USER"
+elif [ -f "$CONFIG_FILE" ]; then
+    NEW_USER=$(python3 -c "import json; print(json.load(open('$CONFIG_FILE'))['user']['username'])")
+    USER_PASSWORD=$(python3 -c "import json; print(json.load(open('$CONFIG_FILE'))['user']['password'])")
     echo "Using username from config.json: $NEW_USER"
 else
-    echo "config.json not found. Creating one now..."
+    echo "config.json not found at $CONFIG_FILE. Creating one now..."
     echo "Please enter the following details:"
     
     read -p "Enter username: " NEW_USER
@@ -37,7 +45,7 @@ else
     echo
     
     # Create config.json with user inputs
-    cat > config.json << EOF
+    cat > "$CONFIG_FILE" << EOF
 {
   "user": {
     "username": "$NEW_USER",
@@ -46,7 +54,7 @@ else
 }
 EOF
     
-    echo "config.json created successfully!"
+    echo "config.json created successfully at $CONFIG_FILE!"
 fi
 
 # Add the user and set the password

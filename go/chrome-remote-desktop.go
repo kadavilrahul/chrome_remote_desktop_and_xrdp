@@ -7,6 +7,7 @@ import (
 	"os"
 	"os/exec"
 	"os/user"
+	"path/filepath"
 	"strings"
 	"syscall"
 
@@ -28,8 +29,17 @@ func main() {
 		os.Exit(1)
 	}
 
+	// Get executable directory to find config.json
+	exePath, err := os.Executable()
+	if err != nil {
+		fmt.Printf("Error getting executable path: %v\n", err)
+		os.Exit(1)
+	}
+	exeDir := filepath.Dir(exePath)
+	configPath := filepath.Join(filepath.Dir(exeDir), "config.json")
+
 	// Load or create config
-	config, err := loadOrCreateConfig("/root/chrome_remote_desktop_and_xrdp/config.json")
+	config, err := loadOrCreateConfig(configPath)
 	if err != nil {
 		fmt.Printf("Error handling config: %v\n", err)
 		os.Exit(1)

@@ -91,6 +91,19 @@ When prompted add new user and password for Linux
 - **Package conflicts**: Run `sudo apt autoremove` then retry
 - **Service not starting**: Check `systemctl status chrome-remote-desktop`
 - **Chrome RD not working**: Ensure you're on Debian/Ubuntu, use xRDP for other distros
+- **Config file not created**: Manually create `config.json` in the repository root:
+  ```bash
+  cat > config.json << EOF
+  {
+    "user": {
+      "username": "your_username",
+      "password": "your_password"
+    }
+  }
+  EOF
+  chmod 600 config.json
+  ```
+  Replace `your_username` and `your_password` with your desired credentials.
 
 ## 📁 Project Structure
 
